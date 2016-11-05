@@ -1,4 +1,4 @@
-package es.uc3m.tiw.web.controladores;
+package es.uc3m.tiw.control.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;

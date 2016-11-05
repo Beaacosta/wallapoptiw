@@ -1,7 +1,10 @@
+package es.uc3m.tiw.modelo.daos;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.ResourceBundle;
+
+import es.uc3m.tiw.modelo.Producto;
 
 
 public interface ProductoDAO {

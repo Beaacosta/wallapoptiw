@@ -1,15 +1,20 @@
+package es.uc3m.tiw.modelo;
 import static javax.persistence.GenerationType.AUTO;
+
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.OneToOne;
 import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name="PRODUCTO")
-public class producto {
+public class Producto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = AUTO)
 	private int id;
@@ -22,9 +27,7 @@ public class producto {
 	@Column(nullable = false)
 	private double precio;
     @Column(nullable = false)
-    private enum estado {
-        disponible, reservado, vendido
-    };
+    private String estado; 
     @Column
     private String picture;
     
@@ -32,11 +35,11 @@ public class producto {
 	@ManyToOne(cascade = ALL)
 	private Usuario usuario;
 	
-	public producto() {
+	public Producto() {
 		// TODO Auto-generated constructor stub
 	}
-	public producto(int id,String titulo, String categoria, String descripcion,
-			double precio, enum estado, String picture) {
+	public Producto(int id,String titulo, String categoria, String descripcion,
+			double precio, String estado, String picture) {
 		super();
         this.id=id;
 		this.titulo = titulo;
@@ -46,7 +49,12 @@ public class producto {
         this.estado = estado;
         this.picture = picture;
 	}
-	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getTitulo() {
 		return titulo;
 	}
@@ -62,31 +70,28 @@ public class producto {
 	public String getDescripcion() {
 		return descripcion;
 	}
-	public void setDescripcion (String descripcion){
+	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public double getPrecio{
+	public double getPrecio() {
 		return precio;
 	}
-	public void setPrecio (double precio){
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
-	public int getId() {
-		return id;
+	public String getEstado() {
+		return estado;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
-    public void setEstado (enum estado){
-        this.estado = estado;
-    }
-    public enum getEstado{
-        return estado;
-    }
-    public void setPicture (String picture){
-        this.picture = picture;
-    }
-    public String getPicture{
-        return picture;
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
 	
 }

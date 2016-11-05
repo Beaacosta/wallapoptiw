@@ -1,3 +1,4 @@
+package es.uc3m.tiw.modelo.daos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +9,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import es.uc3m.tiw.modelo.Producto;
 
-public class productoDAOImpl implements ProductoDAO {
+
+public class ProductoDAOImpl implements ProductoDAO {
 
 	private Connection con;
 	private ResourceBundle rb;
@@ -20,17 +23,17 @@ public class productoDAOImpl implements ProductoDAO {
 		Statement st = con.createStatement();
 		ResultSet resultados = st.executeQuery(rb.getString("seleccionarTodosproductos"));
 		
-		List<producto> listaproductos = new ArrayList<producto>();
-		producto producto;
+		List<Producto> listaproductos = new ArrayList<Producto>();
+		Producto producto;
 		while (resultados.next()) {
-			producto = new producto();
+			producto = new Producto();
 			producto.setId(resultados.getInt("id"));
 			producto.setTitulo(resultados.getString("titulo"));
 			producto.setCategoria(resultados.getString("categoria"));
 			producto.setDescripcion(resultados.getString("descripcion"));
-			producto.setPrecio((String)resultados.getPrecio("precio"));
-            producto.setEstado((enum)resultados.getEstado("estado"));
-            producto.setPicture (resutados.getPicture("picture"));
+			//producto.setPrecio(resultados.getPrecio("precio"));
+            //producto.setEstado((resultados.getEstado("estado"));
+            //producto.setPicture (resutados.getPicture("picture"));
 
 
 			listaproductos.add(producto);
@@ -42,17 +45,17 @@ public class productoDAOImpl implements ProductoDAO {
 	
 		PreparedStatement ps = con.prepareStatement(rb.getString("seleccionarproductoPK"));
 		ps.setInt(1, pk);
-		producto producto = null;
+		Producto producto = null;
 		ResultSet resultados = ps.executeQuery();
 		while (resultados.next()) {
-			producto = new producto();
+			producto = new Producto();
 			producto.setId(resultados.getInt("id"));
 			producto.setTitulo(resultados.getString("titulo"));
 			producto.setCategoria(resultados.getString("categoria"));
 			producto.setDescripcion(resultados.getString("descripcion"));
-			producto.setPrecio((String)resultados.getPrecio("precio"));
-            producto.setEstado((enum)resultados.getEstado("estado"));
-            producto.setPicture (resutados.getPicture("picture"));
+			//producto.setPrecio((String)resultados.getPrecio("precio"));
+            //producto.setEstado((enum)resultados.getEstado("estado"));
+            //producto.setPicture (resutados.getPicture("picture"));
 			
 		}
 		return producto;
@@ -61,19 +64,19 @@ public class productoDAOImpl implements ProductoDAO {
 	
 	public Producto productoPorNombre(String titulo) throws SQLException{
 	
-		PreparedStatement ps = con.prepareStatement(rb.getString("productoPorNombre"));
-		ps.setString(1, nombre);
+		PreparedStatement ps = con.prepareStatement(rb.getString("productoPorTitulo"));
+		ps.setString(1, titulo);
 		Producto producto = null;
 		ResultSet resultados = ps.executeQuery();
 		while (resultados.next()) {
-			producto = new producto();
+			producto = new Producto();
 			producto.setId(resultados.getInt("id"));
 			producto.setTitulo(resultados.getString("titulo"));
 			producto.setCategoria(resultados.getString("categoria"));
 			producto.setDescripcion(resultados.getString("descripcion"));
-			producto.setPrecio((String)resultados.getPrecio("precio"));
-            producto.setEstado((enum)resultados.getEstado("estado"));
-            producto.setPicture (resutados.getPicture("picture"));
+			//producto.setPrecio((String)resultados.getPrecio("precio"));
+            //producto.setEstado((enum)resultados.getEstado("estado"));
+            //producto.setPicture (resutados.getPicture("picture"));
 			
 		}
 		return producto;
@@ -85,9 +88,9 @@ public class productoDAOImpl implements ProductoDAO {
 		ps.setString(1, nuevoproducto.getTitulo());
 		ps.setString(2, nuevoproducto.getCategoria());
 		ps.setString(3, nuevoproducto.getDescripcion());
-		ps.setString(4, (String)nuevoproducto.getPrecio());
-        ps.setString(5, (enum)nuevoproducto.getEstado());
-        ps.setString(6, nuevoproducto.getPicture());
+		//ps.setString(4, (String)nuevoproducto.getPrecio());
+        //ps.setString(5, (enum)nuevoproducto.getEstado());
+        //ps.setString(6, nuevoproducto.getPicture());
 
 
 		ps.execute();
@@ -109,9 +112,9 @@ public class productoDAOImpl implements ProductoDAO {
 		ps.setString(1, producto.getTitulo());
 		ps.setString(2, producto.getCategoria());
 		ps.setString(3, producto.getDescripcion());
-		ps.setString(4, (String)producto.getPrecio());
-        ps.setString(5, (enum)producto.getEstado());
-        ps.setString(6, producto.getPicture());
+		//ps.setString(4, (String)producto.getPrecio());
+        //ps.setString(5, (enum)producto.getEstado());
+        //ps.setString(6, producto.getPicture());
 		ps.execute();
 		return productoPorClave(producto.getId());
 		

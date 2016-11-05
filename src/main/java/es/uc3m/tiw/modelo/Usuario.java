@@ -1,4 +1,8 @@
+package es.uc3m.tiw.modelo;
 import static javax.persistence.GenerationType.AUTO;
+
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +13,7 @@ import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name="USUARIO")
-public class usuario {
+public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = AUTO)
 	private int id;
@@ -18,29 +22,31 @@ public class usuario {
 	@Column(length = 30)
 	private String apellidos;
 	@Column(nullable = false, length = 30, unique = true)
-	private String ciudad;
+	private String usuario;
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
 	private String mail;
 	@Column(nullable = false)
 	private String passVerif;
+	@Column(nullable = false)
+	private String ciudad;
 	
 	/*@OneToOne(cascade = ALL)
 	private Direccion direccion;*/
 	
-	public usuario() {
+	public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
-	public usuario(String nombre, String apellidos, String ciudad,
+	public Usuario(String nombre, String apellidos, String ciudad,
 			String password) {
 		super();
 		this.nombre = nombre;
 		this.apellidos = apellidos;
-		this.usuario = ciudad;
+		this.ciudad = ciudad;
 		this.password = password;
 	}
-	public usuario(String usuario, String password) {
+	public Usuario(String usuario, String password) {
 		super();
 		this.usuario = usuario;
 		this.password = password;
@@ -58,10 +64,10 @@ public class usuario {
 		this.apellidos = apellidos;
 	}
 	public String getCiudad() {
-		return usuario;
+		return ciudad;
 	}
 	public void setCiudad(String ciudad) {
-		this.usuario = usuario;
+		this.ciudad = usuario;
 	}
 	public String getPassword() {
 		return password;
