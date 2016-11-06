@@ -9,6 +9,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.persistence.EntityManager;
+import javax.transaction.UserTransaction;
+
 import es.uc3m.tiw.modelo.Usuario;
 
 
@@ -16,6 +19,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	private Connection con;
 	private ResourceBundle rb;
+	private EntityManager em;
+	private UserTransaction ut;
+	
+	public UsuarioDAOImpl(EntityManager em, UserTransaction ut) {
+		super();
+		this.em = em;
+		this.ut = ut;
+	}
 	
 	@Override
 	public Collection<Usuario> listarUsuarios() throws SQLException{

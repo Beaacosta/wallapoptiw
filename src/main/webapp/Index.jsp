@@ -14,8 +14,13 @@
     </head>
 
     <body>
+    
+    <!--  Formulario para enviar los datos al SesionServlet -->
+    
 	<div class="container">
 		<article class="registro"> 
+		
+		
 			<p><b> Email </b></p>
 			<div class="input-group">
 	  			<input type="text" class="form-control" placeholder="Email">
@@ -27,6 +32,12 @@
 			</div>
 			<br>
 			<button type="button" class="btn btn-default">Iniciar sesion</button>
+			
+			
+			
+			
+	<!--  Formulario para Registrarse en la aplicación -->
+			
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#ventanaRegistro">Registrarse</button>	
 			<div class="modal fade" id="ventanaRegistro">
 				<div class="modal-dialog">
