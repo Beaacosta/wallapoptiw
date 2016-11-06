@@ -51,42 +51,51 @@ public class Usuario implements Serializable {
 		this.usuario = usuario;
 		this.password = password;
 	}
+	
 	public String getNombre() {
 		return nombre;
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
 	public String getApellidos() {
 		return apellidos;
 	}
+	
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
+	
 	public String getCiudad() {
 		return ciudad;
 	}
+	
 	public void setCiudad(String ciudad) {
 		this.ciudad = usuario;
 	}
+	
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	public String getPassVerif() {
 	return passVerif;
 	}
 	public void setPassVerif(String passVerif) {
 		this.passVerif = passVerif;
 	}
+	
 	public String getMail() {
 	return password;
 	}
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	
 	public int getId() {
 		return id;
 	}
