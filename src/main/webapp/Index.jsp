@@ -48,7 +48,7 @@
 							class="form-control" placeholder="Contrasena">
 				</div>
 				<br>
-				<button type="hidden" name="accion" value="IniciarSesion"
+				<button type="submit" name="accion" value="IniciarSesion"
 					class="btn btn-default">Iniciar sesion</button>
 
 			</form>

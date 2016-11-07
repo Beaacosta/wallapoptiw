@@ -26,12 +26,14 @@ public class Usuario implements Serializable {
 	@Column(nullable = false, length = 30, unique = true)
 	private String mail;
 	@Column(nullable = false)
-	private String passVerif;
-	@Column(nullable = false)
 	private String ciudad;
+	
+	private String passVerif;
 	
 	/*@OneToOne(cascade = ALL)
 	private Direccion direccion;*/
+	
+	//@OneToMany -Agregar campos a la tabla por ejemplo lista de productos
 	
 	public Usuario() {
 		// TODO Auto-generated constructor stub

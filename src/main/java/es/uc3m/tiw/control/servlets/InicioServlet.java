@@ -41,7 +41,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	private static final String INDEX_JSP = "/Index.jsp";
 	private static final String PPRINCIPAL_JSP = "/PaginaPrincipal.jsp";
 
-	@PersistenceContext(unitName = "demoTIW")
+	@PersistenceContext(unitName = "wallapoptiw")
 	private EntityManager em;
 
 	@Resource
@@ -51,7 +51,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	 
 
 	public void init(ServletConfig config) throws ServletException{
-		config = config;
+		this.config = config;
 		usuarioDAO = new UsuarioDAOImpl (em,ut);
 
 	}
@@ -69,10 +69,10 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String salir = request.getParameter("accion");
+		/*String salir = request.getParameter("accion");
 		if(salir!=null && !salir.equals("")){
 			request.getSession().invalidate();
-		}
+		}*/
 
 		config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
 	}
