@@ -3,6 +3,7 @@ package es.uc3m.tiw.control.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -68,12 +69,12 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*String salir = request.getParameter("accion");
+		String salir = request.getParameter("accion");
 		if(salir!=null && !salir.equals("")){
 			request.getSession().invalidate();
 		}
 
-		config2.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);*/
+		config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
 	}
 
 	/**
@@ -86,12 +87,9 @@ public class InicioServlet extends HttpServlet implements Serializable{
 		
 		String mensaje ="";
 		String pagina ="";
-		pagina = "PPRINCIPAL_JSP";
+		pagina = "INDEX_JSP";
 		
-		HttpSession sesion = request.getSession(true);
-		ServletContext context = sesion.getServletContext();
 
-		Usuario usuario = null;
 
 		String accion = request.getParameter("accion");
 		String operacion=(String)request.getParameter("action");
@@ -100,6 +98,9 @@ public class InicioServlet extends HttpServlet implements Serializable{
 		//caso iniciar sesion
 		if(accion.equals("IniciarSesion")){
 			
+			HttpSession sesion = request.getSession(true);
+
+			Usuario usuario = null;
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			
@@ -131,9 +132,13 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			String nombre = request.getParameter("Nombre");
 			String apellidos = request.getParameter("Apellidos");
 			String contrasenya = request.getParameter("Contrasenya");
-			String verificacionContrasenya = request.getParameter("InputEmail");
+			String verificacionContrasenya = request.getParameter("VerificacionContrasenya");
 			String ciudad = request.getParameter("Ciudad");
-						
+			
+			
+			HttpSession sesion = request.getSession(true);
+
+			Usuario usuario = null;
 			usuario.setNombre(nombre);
 			usuario.setApellidos(apellidos);
 			usuario.setMail(inputEmail);
@@ -141,14 +146,13 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			usuario.setPassword(contrasenya);
 			
 			Collection <Usuario> usuCollection= null;
-			
-			try{
-				
-				usuCollection=usuarioDAO.recuperarUnUsuarioPorMail(usuario.getMail());
-			}catch(Exception e){
+			try {
+				usuCollection= usuarioDAO.buscarPorMail(usuario.getMail());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+					
 			
 			if(usuCollection.isEmpty()){
 				try{
@@ -158,8 +162,8 @@ public class InicioServlet extends HttpServlet implements Serializable{
 				}
 				
 				sesion.setAttribute("usuario", usuario);
-				//Collection <Usuario> usuarios = usuarioDAO.listarUsuarios();
-				//sesion.setAttribute("usuarios", usuarios);
+				Collection<Usuario> usuarios = usuarioDAO.buscarTodosLosUsuarios();
+				sesion.setAttribute("usuarios", usuarios);
 				sesion.setAttribute("acceso", "ok");
 				sesion.setAttribute("mensajeRegistro", mensaje);
 				

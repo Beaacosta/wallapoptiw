@@ -11,6 +11,12 @@ import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import es.uc3m.tiw.modelo.Usuario;
@@ -18,8 +24,6 @@ import es.uc3m.tiw.modelo.Usuario;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
-	private Connection con;
-	private ResourceBundle rb;
 	private EntityManager em;
 	private UserTransaction ut;
 
@@ -31,8 +35,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public Collection<Usuario> listarUsuarios() throws SQLException{
+		
+		return em.createQuery("select u from Usuario u", Usuario.class).getResultList();
 
-		Statement st = con.createStatement();
+		/*Statement st = con.createStatement();
 		ResultSet resultados = st.executeQuery(rb.getString("seleccionarTodosUsuarios"));
 
 		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
@@ -44,12 +50,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			usuario.setPassword(resultados.getString("password"));
 			listaUsuarios.add(usuario);
 		}
-		return listaUsuarios;
+		return listaUsuarios;*/
 	}
 	@Override
 	public Usuario recuperarUnUsuarioPorClave(int pk) throws SQLException{
 
-		PreparedStatement ps = con.prepareStatement(rb.getString("seleccionarUsuarioPK"));
+		return em.find(Usuario.class, pk);
+		
+		/*PreparedStatement ps = con.prepareStatement(rb.getString("seleccionarUsuarioPK"));
 		ps.setInt(1, pk);
 		Usuario usuario = null;
 		ResultSet resultados = ps.executeQuery();
@@ -60,7 +68,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			usuario.setPassword(resultados.getString("password"));
 
 		}
-		return usuario;
+		return usuario;*/
 	}
 	@Override
 	/**
@@ -68,7 +76,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	 */
 	public Usuario recuperarUnUsuarioPorNombre(String nombre) throws SQLException{
 
-		PreparedStatement ps = con.prepareStatement(rb.getString("seleccionarUsuarioNombre"));
+		 return em.createQuery("select u from Usuario u where u.nombre="+nombre, Usuario.class).getSingleResult();
+
+		
+		/*PreparedStatement ps = con.prepareStatement(rb.getString("seleccionarUsuarioNombre"));
 		ps.setString(1, nombre);
 		Usuario usuario = null;
 		ResultSet resultados = ps.executeQuery();
@@ -79,60 +90,99 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			usuario.setPassword(resultados.getString("password"));
 
 		}
-		return usuario;
+		return usuario;*/
 	}
 	
 	
-	public Collection<Usuario> recuperarUnUsuarioPorMail(String email)throws NoResultException{
-		return em.createQuery("select u from Usuario u where u.email='"+email+"'", Usuario.class).getResultList();
+	public Collection<Usuario> buscarPorEmail(String mail)throws NoResultException{
+		return em.createQuery("select u from Usuario u where u.mail='"+mail+"'", Usuario.class).getResultList();
 	}
 	
 	
 	@Override
-	public Usuario crearUsuario(Usuario nuevoUsuario) throws SQLException{
+	public Usuario crearUsuario(Usuario nuevoUsuario) throws SQLException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException, NotSupportedException{
 
-		PreparedStatement ps = con.prepareStatement(rb.getString("crearUsuario"));
-		ps.setString(1, nuevoUsuario.getNombre());
+		ut.begin();
+		em.persist(nuevoUsuario);
+		ut.commit();
+		return nuevoUsuario;
+		
+		/*PreparedStatement ps = con.prepareStatement(rb.getString("crearUsuario"));
+		ps.setString(1, nuevoUsuario.getMail());
 		ps.setString(2, nuevoUsuario.getPassword());
+		ps.setString(3, nuevoUsuario.getNombre());
+		ps.setString(4, nuevoUsuario.getApellidos());
+		ps.setString(5, nuevoUsuario.getCiudad());
 		ps.execute();
 
-		return recuperarUnUsuarioPorNombre(nuevoUsuario.getNombre());
+		return recuperarUnUsuarioPorNombre(nuevoUsuario.getNombre());*/
+		
+		
 	}
 	@Override
-	public void borrarUsuario(Usuario usuario) throws SQLException{
+	public void borrarUsuario(Usuario usuario) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
 
-		PreparedStatement ps = con.prepareStatement(rb.getString("borrarUsuario"));
+		ut.begin();
+		em.remove(em.merge(usuario));
+		ut.commit();
+		
+		/*PreparedStatement ps = con.prepareStatement(rb.getString("borrarUsuario"));
 		ps.setInt(1, usuario.getId());
-		ps.execute();
+		ps.execute();*/
 
 	}
 	@Override
-	public Usuario actualizarUsuario(Usuario usuario) throws SQLException{
+	public Usuario actualizarUsuario(Usuario usuario) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
 
-		PreparedStatement ps = con.prepareStatement(rb.getString("actualizarUsuario"));
+		ut.begin();
+		em.merge(usuario);
+		ut.commit();
+		return usuario;
+		
+		/*PreparedStatement ps = con.prepareStatement(rb.getString("actualizarUsuario"));
 		ps.setString(1, usuario.getNombre());
 		ps.setString(2, usuario.getPassword());
 		ps.setInt(3, usuario.getId());
 		ps.execute();
-		return recuperarUnUsuarioPorClave(usuario.getId());
+		return recuperarUnUsuarioPorClave(usuario.getId());*/
 
 	}
 	@Override
-	public void setConexion(Connection con) {
+	public void setConexion(EntityManager em) {
 
-		this.con = con;
+		this.em = em;
 
 	}
 	@Override
-	public void setQuerys(ResourceBundle rb) {
+	public void setTransaction(UserTransaction ut) {
 
-		this.rb = rb;
+		this.ut = ut;
 
 	}
 
 	@Override
-	public Usuario recuperarUnUsuarioPorEmailAndPass (String email, String password) throws SQLException {
-		return em.createQuery("select u from Usuario u where u.email='"+email+"' and u.clave='"+password+"'",Usuario.class).getSingleResult();
+	public Usuario recuperarUnUsuarioPorEmailAndPass (String mail, String password) throws SQLException {
+		return em.createQuery("select u from Usuario u where u.mail='"+mail+"' and u.clave='"+password+"'",Usuario.class).getSingleResult();
 	}
+
+	@Override
+	public Collection<Usuario> buscarPorMail(String mail) throws NoResultException {
+		// TODO Auto-generated method stub
+		return em.createQuery("select u from Usuario u where u.mail='"+mail+"'", Usuario.class).getResultList();
+	}
+	
+	public Usuario recuperarUsuarioPorMail(String mail) {
+		 return em.createQuery("select u from Usuario u where u.mail="+mail, Usuario.class).getSingleResult();
+	}
+
+	public Collection<Usuario> buscarTodosLosUsuarios(){
+		return em.createQuery("select u from Usuario u",Usuario.class).getResultList();
+	}
+	
+	
+	public List<Usuario> recuperarUsuarioPorMailLista(String mail) {
+		return em.createQuery("select u from Usuario u where u.mail='"+mail+"'", Usuario.class).getResultList();
+	}
+	
 
 }

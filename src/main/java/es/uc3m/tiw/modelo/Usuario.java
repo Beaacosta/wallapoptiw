@@ -21,11 +21,9 @@ public class Usuario implements Serializable {
 	private String nombre;
 	@Column(length = 30)
 	private String apellidos;
-	@Column(nullable = false, length = 30, unique = true)
-	private String usuario;
 	@Column(nullable = false)
 	private String password;
-	@Column(nullable = false)
+	@Column(nullable = false, length = 30, unique = true)
 	private String mail;
 	@Column(nullable = false)
 	private String passVerif;
@@ -46,9 +44,9 @@ public class Usuario implements Serializable {
 		this.ciudad = ciudad;
 		this.password = password;
 	}
-	public Usuario(String usuario, String password) {
+	public Usuario(String mail, String password) {
 		super();
-		this.usuario = usuario;
+		this.mail = mail;
 		this.password = password;
 	}
 	
@@ -72,7 +70,7 @@ public class Usuario implements Serializable {
 	}
 	
 	public void setCiudad(String ciudad) {
-		this.ciudad = usuario;
+		this.ciudad = ciudad;
 	}
 	
 	public String getPassword() {
@@ -102,5 +100,5 @@ public class Usuario implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+		
 }

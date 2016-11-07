@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -49,14 +53,14 @@
 
 			</form>
 
-			<!--  En caso de que el inico de sesión no sea correcto 
+			<!--  En caso de que el inico de sesiÃ³n no sea correcto 
 			<form method="post" action="inicio">
 				<input name="accion" value="invalidar" type="hidden">
 				<button> Invalidar sesion </button>			
 			</form>-->
 
 
-			<!--  Formulario para Registrarse en la aplicación -->
+			<!--  Formulario para Registrarse en la aplicaciÃ³n -->
 
 			<button type="button" class="btn btn-default" data-toggle="modal"
 				data-target="#ventanaRegistro">Registrarse</button>

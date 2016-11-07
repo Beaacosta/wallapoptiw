@@ -4,30 +4,42 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 import es.uc3m.tiw.modelo.Usuario;
 
 
 public interface UsuarioDAO {
 	
-	public abstract Usuario actualizarUsuario(Usuario usuario) throws SQLException;
+	
+	public Usuario actualizarUsuario(Usuario usuario) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException;
 
-	public abstract void borrarUsuario(Usuario usuario) throws SQLException;
+	public void borrarUsuario(Usuario usuario) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException;
 
-	public abstract Usuario crearUsuario(Usuario nuevoUsuario) throws SQLException;
-
+	public Usuario crearUsuario(Usuario nuevoUsuario) throws SQLException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException, NotSupportedException;
+	
 	public abstract Usuario recuperarUnUsuarioPorNombre(String nombre) throws SQLException;
 	
-	Collection<Usuario> recuperarUnUsuarioPorMail(String email) throws NoResultException;
-
+	public Usuario recuperarUsuarioPorMail(String mail);
+		
 	public abstract Usuario recuperarUnUsuarioPorClave(int pk) throws SQLException;
 	
 	public abstract Usuario recuperarUnUsuarioPorEmailAndPass (String email, String password) throws SQLException;
 
 	public abstract Collection<Usuario> listarUsuarios() throws SQLException;
 
-	public abstract void setConexion(Connection con);
+	void setTransaction(UserTransaction ut);
 
-	public abstract void setQuerys(ResourceBundle rb);
+	void setConexion(EntityManager em);
+
+	Collection<Usuario> buscarPorMail(String email) throws NoResultException;
+
+	public Collection<Usuario> buscarTodosLosUsuarios();
 }
