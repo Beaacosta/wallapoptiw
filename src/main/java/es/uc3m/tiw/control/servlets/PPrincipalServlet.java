@@ -84,12 +84,13 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 			sesion.setAttribute("usuario_sesion", user);
 			PAGINA=MIPERFIL_JSP;
 		}
-		/*
 		//condicional Productos
 		else if (accion.equals("Productos")){
-			config.getServletContext().getRequestDispatcher(MISPRODUCTOS_JSP).forward(request, response);
-
+			sesion.setAttribute("usuario_sesion", user);
+			PAGINA=MISPRODUCTOS_JSP;
 		}
+
+		/*
 		//Condicional de chat
 		else if (accion.equals("Chat")){
 			config.getServletContext().getRequestDispatcher(MISPRODUCTOS_JSP).forward(request, response);

@@ -22,9 +22,22 @@
 		</div>
 		<nav class="col-xs-12 col-sm-4">
 			<ul id="menu" class="nav navbar-nav navbar-right">
-				<li><a href="#"><img src="images/usuario.png" width="30"></a></li>
-				<li><a href="#"><img src="images/productos.png" width="30"></a></li>
-				<li><a href="#"><img src="images/chats.png" width=30"></a></li>
+				<form action="editar_usuario" method="post">
+				<ul id="menu" class="nav navbar-nav navbar-right">
+					<li><button type="submit" name="accion" value="Editar"
+							class="btn btn-default">
+							<img src="images/usuario.png" width="30">
+						</button></li>
+					<li><button type="submit" name="accion" value="Productos"
+							class="btn btn-default">
+							<img src="images/productos.png" width="30">
+						</button></li>
+					<li><button type="submit" name="accion" value="Chat"
+							class="btn btn-default">
+							<img src="images/chats.png" width="30">
+						</button></li>
+				</ul>
+			</form>
 			</ul>
 		</nav>	
 	</header>

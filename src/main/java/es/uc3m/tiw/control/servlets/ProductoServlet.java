@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,16 +16,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 
+import es.uc3m.tiw.modelo.Producto;
 import es.uc3m.tiw.modelo.Usuario;
+import es.uc3m.tiw.modelo.daos.ProductoDAO;
+import es.uc3m.tiw.modelo.daos.ProductoDAOImpl;
 import es.uc3m.tiw.modelo.daos.UsuarioDAO;
 import es.uc3m.tiw.modelo.daos.UsuarioDAOImpl;
 
-@WebServlet("/editar_usuario")
-public class EditarServlet extends HttpServlet implements Serializable{
+@WebServlet("/productos")
+public class ProductoServlet extends HttpServlet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String MIPERFIL_JSP = "/MiPerfil-editar.jsp";
-	private static final String MICONTRASENYA_JSP = "/MiPerfil-contrasenya.jsp";
-	private static final String INDEX_JSP = "/Index.jsp";
 	private static final String MISPRODUCTOS_JSP = "/MisProductos.jsp";
 	private String PAGINA = "";
 
@@ -34,18 +36,18 @@ public class EditarServlet extends HttpServlet implements Serializable{
 	@Resource
 	private UserTransaction ut;
 	private ServletConfig config;
-	private UsuarioDAO usuarioDAO;
+	private ProductoDAO productoDao;
 	
 	
 	public void init(ServletConfig config) throws ServletException{
 
 		this.config = config;
-		usuarioDAO = new UsuarioDAOImpl (em,ut);
+		productoDao = new ProductoDAOImpl ();
 	}
 
 
 	public void destroy() {
-		usuarioDAO = null;
+		productoDao = null;
 
 	}
 	/**
@@ -55,7 +57,7 @@ public class EditarServlet extends HttpServlet implements Serializable{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		PAGINA=MIPERFIL_JSP;
+		PAGINA=MISPRODUCTOS_JSP;
 
 		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
 	}
@@ -67,8 +69,11 @@ public class EditarServlet extends HttpServlet implements Serializable{
 	 */
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		String mensaje ="";
 
 		String accion = request.getParameter("accion");
+		
 
 		HttpSession sesion = (HttpSession) request.getSession(false);
 		Usuario user = (Usuario) sesion.getAttribute("usuario_sesion");
@@ -84,96 +89,102 @@ public class EditarServlet extends HttpServlet implements Serializable{
 			sesion.setAttribute("usuario_sesion", user);
 			PAGINA=MISPRODUCTOS_JSP;
 		}
+
 		/*
 		//Condicional de chat
 		else if (accion.equals("Chat")){
 			config.getServletContext().getRequestDispatcher(MISPRODUCTOS_JSP).forward(request, response);
+
 		}*/
-				
-		//caso iniciar sesion
-		if(accion.equals("Guardar")){
-			
-			String nombre=request.getParameter("Nombre");
-			String apellidos=request.getParameter("Apellidos");
-			String email=request.getParameter("Email");				
-			String ciudad=request.getParameter("Ciudad");
-			
-			
-			if(!nombre.equals("")){
-				user.setNombre(nombre);
-			}
-			if(!apellidos.equals("")){
-				user.setApellidos(apellidos);
-			}
-			if(!email.equals("")){
-				//Comprobar que el email no exista ya en la bd
-				user.setMail(email);
-			}
-			if(!ciudad.equals("")){
-				user.setCiudad(ciudad);
-			}
-			
-			try{
-				user=usuarioDAO.actualizarUsuario(user);
-				sesion.setAttribute("usuario_sesion", user);
-				PAGINA=MIPERFIL_JSP;
-				System.out.println("SI");
-			}
-			catch (Exception e){
-				PAGINA=MIPERFIL_JSP;
-				e.printStackTrace();
-				//Mensaje no se ha podido editar
-				System.out.println("NO");
-				
-			}
-	
-		}
+
 		
-		if(accion.equals("Cambiar")){
+		//caso de añadir un producto
+		if(accion.equals("producto")){
+
+			String nombre = request.getParameter("NombreProducto");
+			String categoria = request.getParameter("Categoria");
+			String descripcion = request.getParameter("Descripcion");
+			String precio = request.getParameter("Precio");
+			String estado = request.getParameter("Estado");
 			
-			String cont_actual=request.getParameter("ContrasenyaActual");
-			String cont_nueva=request.getParameter("NuevaContrasenya");
-			String verif_cont=request.getParameter("VerificarContrasenya");							
+
+			Producto producto = new Producto();
 			
-			if(cont_actual.equals("")||cont_nueva.equals("")||verif_cont.equals("")){
-				PAGINA=MICONTRASENYA_JSP;
-				//No se ha podido cambiar la contraseña
+			if(nombre!=null){
+				producto.setTitulo(nombre);
 			}
-			else{
-				//Contraseña actual es correcta y coinciden las contraseñas nuevas
-				if((user.getPassword().equals(cont_actual))&&(cont_nueva.equals(verif_cont))){
-					user.setPassword(cont_nueva);
-					user.setPassVerif(cont_nueva);
-				}
-				
-				try{
-					user=usuarioDAO.actualizarUsuario(user);
-					sesion.setAttribute("usuario_sesion", user);
-					PAGINA=MICONTRASENYA_JSP;
-					//Mensaje si se ha podido editar
-					System.out.println("SI");
-				}
-				catch (Exception e){
-					PAGINA=MICONTRASENYA_JSP;
-					//Mensaje no se ha podido editar
-					System.out.println("NO");
-					
-				}
+			if(categoria!=null){
+				producto.setCategoria(categoria);
 			}
-			
-		}
-		
-		if(accion.equals("Baja")){
-			
+			if(descripcion!=null){
+				producto.setDescripcion(descripcion);
+			}
+			if(precio!=null){
+				//TENEMOS QUE VER COMO SE PASA EL PRECIO A DOUBLE DE UN STRING, O CAMBIARLO A STRING
+				//producto.setPrecio(precio);
+			}
+			if(estado!=null){
+				producto.setEstado(estado);
+			}
+
 			try{
-				usuarioDAO.borrarUsuario(user);
-				PAGINA=INDEX_JSP;
+				productoDao.crearProducto(producto);
+				//Se ha creado correctamente
+				PAGINA=MISPRODUCTOS_JSP;
 			}catch(Exception e){
-				PAGINA=MIPERFIL_JSP;
+				//No se ha creado correctamente
+				PAGINA=MISPRODUCTOS_JSP;
+				e.printStackTrace();
+			}
+		}else if(accion.equals("eliminar")){
+			try{
+				
+			}catch(Exception e){
+				
+			}
+		}else if(accion.equals("no_eliminar")){
+			try{
+				
+			}catch(Exception e){
+				
+			}
+		}else if(accion.equals("modificar")){
+			String nombre = request.getParameter("NombreProducto");
+			String categoria = request.getParameter("Categoria");
+			String descripcion = request.getParameter("Descripcion");
+			String precio = request.getParameter("Precio");
+			String estado = request.getParameter("Estado");
+			
+			//Este producto debe de ser el que se haya arcado, no se si por sesion id o como
+			Producto producto = new Producto();
+			
+			if(nombre!=null){
+				producto.setTitulo(nombre);
+			}
+			if(categoria!=null){
+				producto.setCategoria(categoria);
+			}
+			if(descripcion!=null){
+				producto.setDescripcion(descripcion);
+			}
+			if(precio!=null){
+				//TENEMOS QUE VER COMO SE PASA EL PRECIO A DOUBLE DE UN STRING, O CAMBIARLO A STRING
+				//producto.setPrecio(precio);
+			}
+			if(estado!=null){
+				producto.setEstado(estado);
+			}
+
+			try{
+				
+			}catch(Exception e){
+				
 			}
 		}
+		
 		
 		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);	
 	}
 
 }
+
