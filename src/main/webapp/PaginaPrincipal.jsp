@@ -21,11 +21,14 @@
 			<h1><b>WALLAPOPTIW</b></h1>
 		</div>
 		<nav class="col-xs-12 col-sm-4">
+		<form action="pag_principal" method="post">
 			<ul id="menu" class="nav navbar-nav navbar-right">
-				<li><a href="#"><img src="images/usuario.png" width="30"></a></li>
+				<li><button type="submit" name="accion" value="Editar"
+					class="btn btn-default"><img src="images/usuario.png" width="30"></button></li>
 				<li><a href="#"><img src="images/productos.png" width="30"></a></li>
 				<li><a href="#"><img src="images/chats.png" width=30"></a></li>
 			</ul>
+		</form>
 		</nav>	
 	</header>
 	

@@ -89,8 +89,6 @@ public class InicioServlet extends HttpServlet implements Serializable{
 		String mensaje ="";
 
 		String accion = request.getParameter("accion");
-		String operacion=(String)request.getParameter("action");
-
 
 		//caso iniciar sesion
 		if(accion.equals("IniciarSesion")){
@@ -102,7 +100,6 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			String password = request.getParameter("password");
 
 			if(email.equals("")||password.equals("")){
-				System.out.println("FIN IF1");
 				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
 				sesion.setAttribute("mensajeRegistro", mensje);*/
 				config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
@@ -114,6 +111,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 					if (usuario == null) {
 						config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
 					}else {
+						sesion.setAttribute(email, email);
 						config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
 					}
 				}catch (Exception e){
