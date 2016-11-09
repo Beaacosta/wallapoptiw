@@ -162,7 +162,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public Usuario recuperarUnUsuarioPorEmailAndPass (String mail, String password) throws SQLException {
-		return em.createQuery("select u from Usuario u where u.mail='"+mail+"' and u.clave='"+password+"'",Usuario.class).getSingleResult();
+		return em.createQuery("select u from Usuario u where u.mail='"+mail+"' and u.password='"+password+"'",Usuario.class).getSingleResult();
 	}
 
 	@Override

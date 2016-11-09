@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 import javax.transaction.UserTransaction;
 
 import es.uc3m.tiw.modelo.Usuario;
@@ -86,47 +87,45 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		String mensaje ="";
-		String pagina ="";
-		pagina = "INDEX_JSP";
-		
-
 
 		String accion = request.getParameter("accion");
 		String operacion=(String)request.getParameter("action");
 
-		
+
 		//caso iniciar sesion
 		if(accion.equals("IniciarSesion")){
-			
+
 			HttpSession sesion = request.getSession(true);
 
 			Usuario usuario = null;
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-			
-			try{
-				usuario=usuarioDAO.recuperarUnUsuarioPorEmailAndPass(email, password);
-			}catch (Exception e){
-				e.printStackTrace();
+
+			if(email.equals("")||password.equals("")){
+				System.out.println("FIN IF1");
+				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
+				sesion.setAttribute("mensajeRegistro", mensje);*/
+				config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+
+			}
+			else{
+				try{
+					usuario=usuarioDAO.recuperarUnUsuarioPorEmailAndPass(email, password);
+					if (usuario == null) {
+						config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+					}else {
+						config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
+					}
+				}catch (Exception e){
+					e.printStackTrace();
+					//AQUI HUBO UN PETE
+				}				
 			}
 			
-			//si el usuario esta en la bbdd
-			if (usuario!=null && validarResgistro(request) == true){
-				pagina = PPRINCIPAL_JSP;
-
-				//creamos una sesion de usuario con TODOS los campos
-				
-				
-				config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
-
-			}else{
-				mensaje = "No existen usuarios registrados con esos datos.";
-				sesion.setAttribute("mensajeInicio", mensaje);
-			}
 		}
 
 		//caso de registrarse
-		if(accion.equals("registro")){
+		else if(accion.equals("registro")){
 			
 			String inputEmail = request.getParameter("InputEmail");
 			String nombre = request.getParameter("Nombre");
@@ -183,7 +182,6 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	public boolean validarResgistro(HttpServletRequest request){
 
 		int numParametros= request.getParameterMap().size();
-
 		if(numParametros==2 && request.getParameter("email")!=null && request.getParameter("password")!=null){
 			return true;
 		}else return false;

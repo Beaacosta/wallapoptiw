@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -51,7 +50,7 @@
 				<button type="submit" name="accion" value="IniciarSesion"
 					class="btn btn-default">Iniciar sesion</button>
 
-			</form>
+			
 
 			<!--  En caso de que el inico de sesión no sea correcto 
 			<form method="post" action="inicio">
@@ -59,11 +58,10 @@
 				<button> Invalidar sesion </button>			
 			</form>-->
 
-
 			<!--  Formulario para Registrarse en la aplicación -->
 
 			<button type="button" class="btn btn-default" data-toggle="modal"
-				data-target="#ventanaRegistro">Registrarse</button>
+				data-target="#ventanaRegistro" style="margin-left:15px;">Registrarse</button>
 			<div class="modal fade" id="ventanaRegistro">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -127,6 +125,7 @@
 				</div>
 			</div>
 			<br> <br> <a href="#">Olvide mi contrasenya</a>
+			</form>
 		</article>
 	</div>
 
