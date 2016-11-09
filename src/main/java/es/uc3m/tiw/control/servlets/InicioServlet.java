@@ -125,42 +125,95 @@ public class InicioServlet extends HttpServlet implements Serializable{
 		//caso de registrarse
 		if(accion.equals("registro")){
 			
-			String inputEmail = request.getParameter("InputEmail");
+			String inputMail = request.getParameter("InputEmail");
 			String nombre = request.getParameter("Nombre");
 			String apellidos = request.getParameter("Apellidos");
 			String contrasenya = request.getParameter("Contrasenya");
 			String verificacionContrasenya = request.getParameter("VerificacionContrasenya");
 			String ciudad = request.getParameter("Ciudad");
-			
-			
+
+
+			Usuario user = new Usuario();
+			user.setNombre(nombre);
+			user.setApellidos(apellidos);
+			user.setMail(inputMail);
+			user.setCiudad(ciudad);
+			user.setPassword(contrasenya);
+			user.setPassVerif(verificacionContrasenya);
+
+
+			/*if(inputMail.equals("")||contrasenya.equals("") || nombre.equals("") || apellidos.equals("") || verificacionContrasenya.equals("") || ciudad.equals("")){
+				System.out.println("FIN");
+				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
+				sesion.setAttribute("mensajeRegistro", mensje);*/
+			/*config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+
+
+			}else{
+
+
+				try{
+					usuario=usuarioDAO.recuperarUsuarioPorMail(inputMail);
+					if (usuario != null) {
+						config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+						//usuario ya registrado
+						System.out.print("estoy NO registrado");
+					}
+				}catch (Exception e){
+					e.printStackTrace();
+					//AQUI HUBO UN PETE
+				}	
+				}	*/
+
+
 			HttpSession sesion = request.getSession(true);
 
-			Usuario usuario = null;
-			usuario.setNombre(nombre);
-			usuario.setApellidos(apellidos);
-			usuario.setMail(inputEmail);
-			usuario.setCiudad(ciudad);
-			usuario.setPassword(contrasenya);
-			
-			Usuario user = null;
+
+
+
+
+
+
+
+			/*Collection<Usuario> u = null;
 			try {
-				user= usuarioDAO.buscarPorMail(usuario.getMail());
-				if(user == null){
-					try{
-						usuario=usuarioDAO.crearUsuario(usuario);
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-					//REGISTRO OK, INICIAR SESION
-					config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-				}else{
-					config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-					//YA EXISTE EL USUARIO, REGISTRARSE DE NUEVO
-				}
+				u=usuarioDAO.buscarListaMail(user.getMail());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}*/
+			
+			
+			String emailBd ="";
+			//esto coge el campo PASSWORD DE LA BBDD Y NO DEBERIA
+			try {
+				emailBd = usuarioDAO.buscarPorMail(inputMail).getMail();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
+			
+			if(!inputMail.equals(emailBd)){
+
+
+				try{
+					user=usuarioDAO.crearUsuario(user);
+					config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
+
+
+
+
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}else{
+				config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+
+
+			}
+
+
+
 					
 		}
 

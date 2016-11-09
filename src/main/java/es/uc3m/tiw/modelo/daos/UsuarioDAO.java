@@ -39,7 +39,7 @@ public interface UsuarioDAO {
 
 	void setConexion(EntityManager em);
 
-	Usuario buscarPorMail(String email) throws NoResultException;
+	Usuario buscarPorMail(String email) throws SQLException;
 
 	public Collection<Usuario> buscarTodosLosUsuarios();
 }
