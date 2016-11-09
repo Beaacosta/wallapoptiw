@@ -125,7 +125,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 		}
 
 		//caso de registrarse
-		else if(accion.equals("registro")){
+		if(accion.equals("registro")){
 			
 			String inputEmail = request.getParameter("InputEmail");
 			String nombre = request.getParameter("Nombre");
@@ -144,36 +144,26 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			usuario.setCiudad(ciudad);
 			usuario.setPassword(contrasenya);
 			
-			Collection <Usuario> usuCollection= null;
+			Usuario user = null;
 			try {
-				usuCollection= usuarioDAO.buscarPorMail(usuario.getMail());
+				user= usuarioDAO.buscarPorMail(usuario.getMail());
+				if(user == null){
+					try{
+						usuario=usuarioDAO.crearUsuario(usuario);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					//REGISTRO OK, INICIAR SESION
+					config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+				}else{
+					config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+					//YA EXISTE EL USUARIO, REGISTRARSE DE NUEVO
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 					
-			
-			if(usuCollection.isEmpty()){
-				try{
-					usuario=usuarioDAO.crearUsuario(usuario);
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-				
-				sesion.setAttribute("usuario", usuario);
-				Collection<Usuario> usuarios = usuarioDAO.buscarTodosLosUsuarios();
-				sesion.setAttribute("usuarios", usuarios);
-				sesion.setAttribute("acceso", "ok");
-				sesion.setAttribute("mensajeRegistro", mensaje);
-				
-				config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
-			}else{
-				mensaje ="Ya existe un usuario con este email. Por favor, elija otro";
-				sesion.setAttribute("mensajeRegistro", mensaje);
-				sesion.setAttribute("usuario", usuario);
-				config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-				
-			}
 		}
 
 
