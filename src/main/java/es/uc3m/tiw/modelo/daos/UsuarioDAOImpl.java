@@ -166,13 +166,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public Usuario buscarPorMail(String mail) throws NoResultException {
+	public Usuario buscarPorMail(String mail) throws SQLException {
 		// TODO Auto-generated method stub
 		return em.createQuery("select u from Usuario u where u.mail='"+mail+"'", Usuario.class).getSingleResult();
 	}
 	
 	public Usuario recuperarUsuarioPorMail(String mail) {
-		 return em.createQuery("select u from Usuario u where u.mail="+mail, Usuario.class).getSingleResult();
+		 return em.createQuery("select u from Usuario u where u.mail=:mail", Usuario.class).getSingleResult();
 	}
 
 	public Collection<Usuario> buscarTodosLosUsuarios(){
@@ -183,6 +183,17 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	public List<Usuario> recuperarUsuarioPorMailLista(String mail) {
 		return em.createQuery("select u from Usuario u where u.mail='"+mail+"'", Usuario.class).getResultList();
 	}
+	
+	public boolean estaCreado (String mail){
+		Usuario query=  em.createQuery("select u.mail from Usuario u where u.mail="+mail, Usuario.class).getSingleResult();
+		return false;
+	}
+	
+	public Collection<Usuario> buscarListaMail(String email)throws NoResultException{
+		return em.createQuery("select u from Usuario u where u.email='"+email+"'", Usuario.class).getResultList();
+	}
+
+	
 	
 
 }
