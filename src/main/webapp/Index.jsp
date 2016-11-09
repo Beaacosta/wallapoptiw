@@ -101,7 +101,7 @@
 								</div>
 								<div class="form-group">
 									<label for="VerificacionContrasenya">Verificacion
-										Contrasenya</label> <input type="verificacioncontrasenya"
+										Contrasenya</label> <input type="Verificacioncontrasenya"
 										class="form-control" id="VerificacionContrasenya"
 										name="VerificacionContrasenya"
 										placeholder="Contrasenya">

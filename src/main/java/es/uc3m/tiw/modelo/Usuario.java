@@ -17,18 +17,18 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = AUTO)
 	private int id;
-	@Column(nullable = false, length = 15)
-	private String nombre;
 	@Column(length = 30)
 	private String apellidos;
 	@Column(nullable = false)
-	private String password;
+	private String ciudad;
 	@Column(nullable = false, length = 30, unique = true)
 	private String mail;
-	@Column(nullable = false)
-	private String ciudad;
-	
+	@Column(nullable = false, length = 15)
+	private String nombre;	
+	@Column(nullable = true)
 	private String passVerif;
+	@Column(nullable = false)
+	private String password;
 	
 	/*@OneToOne(cascade = ALL)
 	private Direccion direccion;*/
