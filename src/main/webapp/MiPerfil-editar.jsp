@@ -50,7 +50,7 @@
 				<form action="editar_usuario" method="post">
 					<div class="input-group input_espaciado">
 						<span class="input-group-addon" id="basic-addon1">Nombre</span>
-						<input type="text" class="form-control" name="Nombre" id="Nombre" placeholder="Nombre" aria-describedly="basic-addon1">
+						<input type="text" class="form-control" value="${usuario_sesion.nombre}" name="Nombre" id="Nombre" placeholder="Nombre" aria-describedly="basic-addon1">
 					</div>
 					<div class="input-group input_espaciado">
 						<span class="input-group-addon" id="basic-addon1">Apellidos</span>

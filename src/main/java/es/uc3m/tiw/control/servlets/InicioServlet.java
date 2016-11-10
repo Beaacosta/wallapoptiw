@@ -42,6 +42,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String INDEX_JSP = "/Index.jsp";
 	private static final String PPRINCIPAL_JSP = "/PaginaPrincipal.jsp";
+	private String PAGINA = "";
 
 	@PersistenceContext(unitName = "wallapoptiw")
 	private EntityManager em;
@@ -73,12 +74,10 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*String salir = request.getParameter("accion");
-		if(salir!=null && !salir.equals("")){
-			request.getSession().invalidate();
-		}*/
+	
+		PAGINA=INDEX_JSP;
+		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
 
-		config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
 	}
 
 	/**
@@ -105,20 +104,21 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			if(email.equals("")||password.equals("")){
 				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
 				sesion.setAttribute("mensajeRegistro", mensje);*/
-				config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-
+				PAGINA=INDEX_JSP;
 			}
 			
 			else{
 				 try{
 					 usuario=usuarioDAO.recuperarUnUsuarioPorEmailAndPass(email, password);
-					 if (usuario.equals(null)) {
-						 config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+					 if (usuario==null) {
+						 PAGINA=INDEX_JSP;
 					 }else {
-						 config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
-				 	}
+						 String usuario_sesion="usuario_sesion";
+						 sesion.setAttribute("usuario_sesion", usuario);
+						 PAGINA=PPRINCIPAL_JSP;
+					 }
 				 }catch (Exception e){
-					 config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+					 PAGINA=INDEX_JSP;					 
 					 e.printStackTrace();
 				 }				
 			}							
@@ -150,18 +150,22 @@ public class InicioServlet extends HttpServlet implements Serializable{
 				 if (usuario_bd.equals(null)) {
 					 try{
 						 usuarioDAO.crearUsuario(user);
-						 config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
-						 }
+						 String usuario_sesion="usuario_sesion";
+						 sesion.setAttribute("usuario_sesion", user);
+						 PAGINA=PPRINCIPAL_JSP;
+					 }
 						 catch (Exception e1){
 							 e1.printStackTrace();
 						 }
 				 }else {
-					 config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-			 	}
+					 PAGINA=INDEX_JSP;
+				 }
 			 }catch (NoResultException e){
 				 try{
 				 usuarioDAO.crearUsuario(user);
-				 config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
+				 String usuario_sesion="usuario_sesion";
+				 sesion.setAttribute("usuario_sesion", user);
+				 PAGINA=PPRINCIPAL_JSP;
 				 }
 				 catch (Exception e1){
 					 e1.printStackTrace();
@@ -169,6 +173,8 @@ public class InicioServlet extends HttpServlet implements Serializable{
 				 e.printStackTrace();
 			 }			
 		}
+		 config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
+
 	}
 
 	public boolean validarResgistro(HttpServletRequest request){
