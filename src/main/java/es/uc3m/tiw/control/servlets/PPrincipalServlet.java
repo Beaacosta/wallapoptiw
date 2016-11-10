@@ -28,6 +28,7 @@ import es.uc3m.tiw.modelo.daos.UsuarioDAOImpl;
 public class PPrincipalServlet extends HttpServlet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String MIPERFIL_JSP = "/MiPerfil-editar.jsp";
+	private static final String MISPRODUCTOS_JSP="/MisProductos.jsp";
 
 	@PersistenceContext(unitName = "wallapoptiw")
 	private EntityManager em;
@@ -36,7 +37,7 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 	private UserTransaction ut;
 	private ServletConfig config;
 	private UsuarioDAO usuarioDAO;
-	
+
 	public void init(ServletConfig config) throws ServletException{
 		this.config = config;
 		usuarioDAO = new UsuarioDAOImpl (em,ut);
@@ -52,6 +53,9 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+
+	// Para introducir URL diretamente en la barra de direcciones del navegador
+	// Cuando se hace click sobre un hipervinculo que apunta a la URL del server
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		/*String salir = request.getParameter("accion");
@@ -59,7 +63,8 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 			request.getSession().invalidate();
 		}*/
 		
-		config.getServletContext().getRequestDispatcher(MIPERFIL_JSP).forward(request, response);
+
+		doPost(request,response);
 	}
 
 	/**
@@ -68,15 +73,49 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 
+	// Encio de campos por un formulario
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
 		String accion = request.getParameter("accion");
+		String logo = request.getParameter("Logo");
+		String producto = request.getParameter("producto");
+		
 
 		//caso iniciar sesion
 		if(accion.equals("Editar")){
 			config.getServletContext().getRequestDispatcher(MIPERFIL_JSP).forward(request, response);
-			
+
 		}
+		//condicional Productos
+		else if (accion.equals("Productos")){
+			config.getServletContext().getRequestDispatcher(MISPRODUCTOS_JSP).forward(request, response);
+
+		}
+		//Condicional de chat
+		else if (accion.equals("Chat")){
+			config.getServletContext().getRequestDispatcher(MISPRODUCTOS_JSP).forward(request, response);
+
+		}
+		//Condicional de home
+		if (logo.equals("Principal")){
+			config.getServletContext().getRequestDispatcher(MISPRODUCTOS_JSP).forward(request, response);
+
+		}
+		//Condicional de ver un producto
+				//este habrá que hacerlo con el mismo identificador a todos
+				//y buscar por el par -identificador que es un producto producto.equals(producto1)
+				//mas el atributo id del producto (que no sabria como sacarlo)
+				if (producto.equals("producto1")){
+					config.getServletContext().getRequestDispatcher(MISPRODUCTOS_JSP).forward(request, response);
+
+				}
+
+
+
+
+		//Condicional de Sing Out que hay que crear
+
+
 	}
 
 
