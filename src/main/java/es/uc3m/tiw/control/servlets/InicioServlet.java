@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -41,6 +42,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String INDEX_JSP = "/Index.jsp";
 	private static final String PPRINCIPAL_JSP = "/PaginaPrincipal.jsp";
+	private String PAGINA = "";
 
 	@PersistenceContext(unitName = "wallapoptiw")
 	private EntityManager em;
@@ -72,12 +74,10 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*String salir = request.getParameter("accion");
-		if(salir!=null && !salir.equals("")){
-			request.getSession().invalidate();
-		}*/
+	
+		PAGINA=INDEX_JSP;
+		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
 
-		config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
 	}
 
 	/**
@@ -104,29 +104,28 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			if(email.equals("")||password.equals("")){
 				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
 				sesion.setAttribute("mensajeRegistro", mensje);*/
-				config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-
+				PAGINA=INDEX_JSP;
 			}
 			
 			else{
 				 try{
 					 usuario=usuarioDAO.recuperarUnUsuarioPorEmailAndPass(email, password);
-					 if (usuario.equals(null)) {
-						 config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+					 if (usuario==null) {
+						 PAGINA=INDEX_JSP;
 					 }else {
-						 config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
-				 	}
+						 String usuario_sesion="usuario_sesion";
+						 sesion.setAttribute("usuario_sesion", usuario);
+						 PAGINA=PPRINCIPAL_JSP;
+					 }
 				 }catch (Exception e){
-					 config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+					 PAGINA=INDEX_JSP;					 
 					 e.printStackTrace();
-					 //AQUI HUBO UN PETE
 				 }				
 			}							
 		}
 
 		//caso de registrarse
 		if(accion.equals("registro")){
-
 			String inputMail = request.getParameter("InputEmail");
 			String nombre = request.getParameter("Nombre");
 			String apellidos = request.getParameter("Apellidos");
@@ -142,67 +141,39 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			user.setPassword(contrasenya);
 			user.setPassVerif(verificacionContrasenya);
 
-			/*if(inputMail.equals("")||contrasenya.equals("") || nombre.equals("") || apellidos.equals("") || verificacionContrasenya.equals("") || ciudad.equals("")){
-				System.out.println("FIN");
-				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
-				sesion.setAttribute("mensajeRegistro", mensje);*/
-			/*config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-
-			}else{
-
-				try{
-					usuario=usuarioDAO.recuperarUsuarioPorMail(inputMail);
-					if (usuario != null) {
-						config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-						//usuario ya registrado
-						System.out.print("estoy NO registrado");
-					}
-				}catch (Exception e){
-					e.printStackTrace();
-					//AQUI HUBO UN PETE
-				}	
-				}	*/
-
 			HttpSession sesion = request.getSession(true);
-
-
-
-
-			/*Collection<Usuario> u = null;
-			try {
-				u=usuarioDAO.buscarListaMail(user.getMail());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 			
+			Usuario usuario_bd = null;
 			
-			String emailBd ="";
-			//esto coge el campo PASSWORD DE LA BBDD Y NO DEBERIA
-			try {
-				emailBd = usuarioDAO.buscarPorMail(inputMail).getMail();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			if(!inputMail.equals(emailBd)){
-
-				try{
-					user=usuarioDAO.crearUsuario(user);
-					config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
-
-
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}else{
-				config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-
-			}
-
+			 try{
+				 usuario_bd=usuarioDAO.buscarPorMail(inputMail);
+				 if (usuario_bd.equals(null)) {
+					 try{
+						 usuarioDAO.crearUsuario(user);
+						 String usuario_sesion="usuario_sesion";
+						 sesion.setAttribute("usuario_sesion", user);
+						 PAGINA=PPRINCIPAL_JSP;
+					 }
+						 catch (Exception e1){
+							 e1.printStackTrace();
+						 }
+				 }else {
+					 PAGINA=INDEX_JSP;
+				 }
+			 }catch (NoResultException e){
+				 try{
+				 usuarioDAO.crearUsuario(user);
+				 String usuario_sesion="usuario_sesion";
+				 sesion.setAttribute("usuario_sesion", user);
+				 PAGINA=PPRINCIPAL_JSP;
+				 }
+				 catch (Exception e1){
+					 e1.printStackTrace();
+				 }
+				 e.printStackTrace();
+			 }			
 		}
-
+		 config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
 
 	}
 

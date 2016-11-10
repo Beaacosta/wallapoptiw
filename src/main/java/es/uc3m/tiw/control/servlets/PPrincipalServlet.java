@@ -29,6 +29,7 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String MIPERFIL_JSP = "/MiPerfil-editar.jsp";
 	private static final String MISPRODUCTOS_JSP="/MisProductos.jsp";
+	private String PAGINA="";
 
 	@PersistenceContext(unitName = "wallapoptiw")
 	private EntityManager em;
@@ -58,11 +59,6 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 	// Cuando se hace click sobre un hipervinculo que apunta a la URL del server
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*String salir = request.getParameter("accion");
-		if(salir!=null && !salir.equals("")){
-			request.getSession().invalidate();
-		}*/
-		
 
 		doPost(request,response);
 	}
@@ -80,12 +76,16 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 		String logo = request.getParameter("Logo");
 		String producto = request.getParameter("producto");
 		
-
+		HttpSession sesion = request.getSession();
+		Usuario user = (Usuario) sesion.getAttribute("usuario_sesion");
+		
 		//caso iniciar sesion
 		if(accion.equals("Editar")){
-			config.getServletContext().getRequestDispatcher(MIPERFIL_JSP).forward(request, response);
-
+			String usuario_sesion="usuario_sesion";
+			sesion.setAttribute(usuario_sesion, user);
+			PAGINA=MIPERFIL_JSP;
 		}
+		/*
 		//condicional Productos
 		else if (accion.equals("Productos")){
 			config.getServletContext().getRequestDispatcher(MISPRODUCTOS_JSP).forward(request, response);
@@ -109,14 +109,12 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 					config.getServletContext().getRequestDispatcher(MISPRODUCTOS_JSP).forward(request, response);
 
 				}
-
-
+	*/
 
 
 		//Condicional de Sing Out que hay que crear
-
+		 config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
 
 	}
-
 
 }

@@ -90,7 +90,7 @@ public class Usuario implements Serializable {
 	}
 	
 	public String getMail() {
-	return password;
+	return mail;
 	}
 	public void setMail(String mail) {
 		this.mail = mail;
