@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -119,14 +120,12 @@ public class InicioServlet extends HttpServlet implements Serializable{
 				 }catch (Exception e){
 					 config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
 					 e.printStackTrace();
-					 //AQUI HUBO UN PETE
 				 }				
 			}							
 		}
 
 		//caso de registrarse
 		if(accion.equals("registro")){
-
 			String inputMail = request.getParameter("InputEmail");
 			String nombre = request.getParameter("Nombre");
 			String apellidos = request.getParameter("Apellidos");
@@ -142,68 +141,34 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			user.setPassword(contrasenya);
 			user.setPassVerif(verificacionContrasenya);
 
-			/*if(inputMail.equals("")||contrasenya.equals("") || nombre.equals("") || apellidos.equals("") || verificacionContrasenya.equals("") || ciudad.equals("")){
-				System.out.println("FIN");
-				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
-				sesion.setAttribute("mensajeRegistro", mensje);*/
-			/*config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-
-			}else{
-
-				try{
-					usuario=usuarioDAO.recuperarUsuarioPorMail(inputMail);
-					if (usuario != null) {
-						config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-						//usuario ya registrado
-						System.out.print("estoy NO registrado");
-					}
-				}catch (Exception e){
-					e.printStackTrace();
-					//AQUI HUBO UN PETE
-				}	
-				}	*/
-
 			HttpSession sesion = request.getSession(true);
-
-
-
-
-			/*Collection<Usuario> u = null;
-			try {
-				u=usuarioDAO.buscarListaMail(user.getMail());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 			
+			Usuario usuario_bd = null;
 			
-			String emailBd ="";
-			//esto coge el campo PASSWORD DE LA BBDD Y NO DEBERIA
-			try {
-				emailBd = usuarioDAO.buscarPorMail(inputMail).getMail();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			if(!inputMail.equals(emailBd)){
-
-				try{
-					user=usuarioDAO.crearUsuario(user);
-					config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
-
-
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}else{
-				config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-
-			}
-
+			 try{
+				 usuario_bd=usuarioDAO.buscarPorMail(inputMail);
+				 if (usuario_bd.equals(null)) {
+					 try{
+						 usuarioDAO.crearUsuario(user);
+						 config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
+						 }
+						 catch (Exception e1){
+							 e1.printStackTrace();
+						 }
+				 }else {
+					 config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+			 	}
+			 }catch (NoResultException e){
+				 try{
+				 usuarioDAO.crearUsuario(user);
+				 config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
+				 }
+				 catch (Exception e1){
+					 e1.printStackTrace();
+				 }
+				 e.printStackTrace();
+			 }			
 		}
-
-
 	}
 
 	public boolean validarResgistro(HttpServletRequest request){

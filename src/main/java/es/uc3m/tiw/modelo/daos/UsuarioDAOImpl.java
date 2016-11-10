@@ -166,12 +166,12 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public Usuario buscarPorMail(String mail) throws SQLException {
+	public Usuario buscarPorMail(String mail) throws NoResultException {
 		// TODO Auto-generated method stub
 		return em.createQuery("select u from Usuario u where u.mail='"+mail+"'", Usuario.class).getSingleResult();
 	}
 	
-	public Usuario recuperarUsuarioPorMail(String mail) {
+	public Usuario recuperarUsuarioPorMail(String mail){
 		 return em.createQuery("select u from Usuario u where u.mail=:mail", Usuario.class).getSingleResult();
 	}
 

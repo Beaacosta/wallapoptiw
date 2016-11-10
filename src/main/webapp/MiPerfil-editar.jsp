@@ -47,26 +47,26 @@
 				<h3>Perfil</h3>
 				<h4>Cambia tus datos personales</h4>
 				<hr>
-				<div class="input-group input_espaciado">
-					<span class="input-group-addon" id="basic-addon1">Nombre</span>
-					<input type="text" class="form-control" name="Nombre" id="Nombre" placeholder="Nombre" aria-describedly="basic-addon1">
-				</div>
-				<div class="input-group input_espaciado">
-					<span class="input-group-addon" id="basic-addon1">Apellidos</span>
-					<input type="text" class="form-control" name="Apellidos" id="Apellidos" placeholder="Apellidos" aria-describedly="basic-addon1">
-				</div>
-				<div class="input-group input_espaciado">
-					<span class="input-group-addon" id="basic-addon1">Email</span>
-					<input type="text" class="form-control" name="Email" id="Email" placeholder="Email" aria-describedly="basic-addon1">
-				</div>
-				<div class="input-group input_espaciado">
-					<span class="input-group-addon" id="basic-addon1">Ciudad</span>
-					<input type="text" class="form-control" name="Ciudad" id="Ciudad" placeholder="Ciudad" aria-describedly="basic-addon1">
-				</div>
-				<a href="#">Dar de baja de la aplicación</a>
-				<br>
-				<br>
 				<form action="editar_usuario" method="post">
+					<div class="input-group input_espaciado">
+						<span class="input-group-addon" id="basic-addon1">Nombre</span>
+						<input type="text" class="form-control" name="Nombre" id="Nombre" placeholder="Nombre" aria-describedly="basic-addon1">
+					</div>
+					<div class="input-group input_espaciado">
+						<span class="input-group-addon" id="basic-addon1">Apellidos</span>
+						<input type="text" class="form-control" name="Apellidos" id="Apellidos" placeholder="Apellidos" aria-describedly="basic-addon1">
+					</div>
+					<div class="input-group input_espaciado">
+						<span class="input-group-addon" id="basic-addon1">Email</span>
+						<input type="text" class="form-control" name="Email" id="Email" placeholder="Email" aria-describedly="basic-addon1">
+					</div>
+					<div class="input-group input_espaciado">
+						<span class="input-group-addon" id="basic-addon1">Ciudad</span>
+						<input type="text" class="form-control" name="Ciudad" id="Ciudad" placeholder="Ciudad" aria-describedly="basic-addon1">
+					</div>
+					<a href="#">Dar de baja de la aplicación</a>
+					<br>
+					<br>
 					<button type="hidden" class="btn btn-default" name="accion" value="Guardar">Guardar cambios</button>	
 				</form>
 				<a href="PaginaPrincipal.jsp" class="btn btn-default">Ir a inicio</a>
