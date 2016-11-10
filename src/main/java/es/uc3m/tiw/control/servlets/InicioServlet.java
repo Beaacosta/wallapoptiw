@@ -113,7 +113,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 					if (usuario == null) {
 						config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
 					}else {
-						sesion.setAttribute(email, email);
+						sesion.setAttribute("email", email);
 						config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
 					}
 				}catch (Exception e){
