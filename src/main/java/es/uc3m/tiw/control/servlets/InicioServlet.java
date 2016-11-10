@@ -107,21 +107,21 @@ public class InicioServlet extends HttpServlet implements Serializable{
 				config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
 
 			}
+			
 			else{
-				try{
-					usuario=usuarioDAO.recuperarUnUsuarioPorEmailAndPass(email, password);
-					if (usuario == null) {
-						config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
-					}else {
-						sesion.setAttribute("email", email);
-						config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
-					}
-				}catch (Exception e){
-					e.printStackTrace();
-					//AQUI HUBO UN PETE
-				}				
-			}
-
+				 try{
+					 usuario=usuarioDAO.recuperarUnUsuarioPorEmailAndPass(email, password);
+					 if (usuario.equals(null)) {
+						 config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+					 }else {
+						 config.getServletContext().getRequestDispatcher(PPRINCIPAL_JSP).forward(request, response);
+				 	}
+				 }catch (Exception e){
+					 config.getServletContext().getRequestDispatcher(INDEX_JSP).forward(request, response);
+					 e.printStackTrace();
+					 //AQUI HUBO UN PETE
+				 }				
+			}							
 		}
 
 		//caso de registrarse
