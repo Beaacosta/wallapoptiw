@@ -73,16 +73,15 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
 		String accion = request.getParameter("accion");
-		String logo = request.getParameter("Logo");
-		String producto = request.getParameter("producto");
+		//String logo = request.getParameter("Logo");
+		//String producto = request.getParameter("producto");
 		
-		HttpSession sesion = request.getSession();
+		HttpSession sesion = (HttpSession) request.getSession(false);
 		Usuario user = (Usuario) sesion.getAttribute("usuario_sesion");
 		
 		//caso iniciar sesion
 		if(accion.equals("Editar")){
-			String usuario_sesion="usuario_sesion";
-			sesion.setAttribute(usuario_sesion, user);
+			sesion.setAttribute("usuario_sesion", user);
 			PAGINA=MIPERFIL_JSP;
 		}
 		/*
@@ -110,7 +109,6 @@ public class PPrincipalServlet extends HttpServlet implements Serializable{
 
 				}
 	*/
-
 
 		//Condicional de Sing Out que hay que crear
 		 config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);

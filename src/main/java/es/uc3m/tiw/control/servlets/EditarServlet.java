@@ -70,7 +70,7 @@ public class EditarServlet extends HttpServlet implements Serializable{
 
 		//caso iniciar sesion
 		if(accion.equals("Guardar")){
-			HttpSession sesion = request.getSession(true);
+			HttpSession sesion = (HttpSession) request.getSession(false);
 			Usuario user = (Usuario) sesion.getAttribute("usuario_sesion");
 			
 			String nombre=request.getParameter("Nombre");
@@ -92,10 +92,8 @@ public class EditarServlet extends HttpServlet implements Serializable{
 				user.setCiudad(ciudad);
 			}
 			
-			
 			try{
 				user=usuarioDAO.actualizarUsuario(user);
-				String usuario_sesion="usuario_sesion";
 				sesion.setAttribute("usuario_sesion", user);
 				PAGINA=MIPERFIL_JSP;
 				System.out.println("SI");
@@ -109,7 +107,6 @@ public class EditarServlet extends HttpServlet implements Serializable{
 			
 		}
 		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
-
 		
 	}
 
