@@ -9,17 +9,36 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.persistence.EntityManager;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
+
 import es.uc3m.tiw.modelo.Producto;
+import es.uc3m.tiw.modelo.Usuario;
 
 
 public class ProductoDAOImpl implements ProductoDAO {
 
 	private Connection con;
-	private ResourceBundle rb;
+	//private ResourceBundle rb;
 	
+	private EntityManager em;
+	private UserTransaction ut;
+
+	public ProductoDAOImpl(EntityManager em, UserTransaction ut) {
+		super();
+		this.em = em;
+		this.ut = ut;
+	}
+	
+	/*
 	@Override
 	public Collection<Producto> listaProducto() throws SQLException{
-	
+		
 		Statement st = con.createStatement();
 		ResultSet resultados = st.executeQuery(rb.getString("seleccionarTodosproductos"));
 		
@@ -35,11 +54,13 @@ public class ProductoDAOImpl implements ProductoDAO {
             //producto.setEstado((resultados.getEstado("estado"));
             //producto.setPicture (resutados.getPicture("picture"));
 
-
+	
 			listaproductos.add(producto);
 		}
 		return listaproductos;
 	}
+	*/
+	/*
 	@Override
 	public  Producto productoPorClave(int pk) throws SQLException{
 	
@@ -60,6 +81,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 		}
 		return producto;
 	}
+	*/
+	/*
 	@Override
 	
 	public Producto productoPorNombre(String titulo) throws SQLException{
@@ -81,30 +104,44 @@ public class ProductoDAOImpl implements ProductoDAO {
 		}
 		return producto;
 	}
+	*/
+
 	@Override
-	public  Producto crearProducto(Producto nuevoproducto) throws SQLException{
-	
-		PreparedStatement ps = con.prepareStatement(rb.getString("crearProducto"));
-		ps.setString(1, nuevoproducto.getTitulo());
-		ps.setString(2, nuevoproducto.getCategoria());
-		ps.setString(3, nuevoproducto.getDescripcion());
+	public Producto crearProducto(Producto nuevoproducto) throws SQLException, SecurityException, IllegalStateException, NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+		
+		ut.begin();
+		em.persist(nuevoproducto);
+		ut.commit();
+		return nuevoproducto;	
+		
+		//PreparedStatement ps = con.prepareStatement(rb.getString("crearProducto"));
+		//ps.setString(1, nuevoproducto.getTitulo());
+		//ps.setString(2, nuevoproducto.getCategoria());
+		//ps.setString(3, nuevoproducto.getDescripcion());
 		//ps.setString(4, (String)nuevoproducto.getPrecio());
         //ps.setString(5, (enum)nuevoproducto.getEstado());
         //ps.setString(6, nuevoproducto.getPicture());
 
 
-		ps.execute();
+		//ps.execute();
 		
-		return productoPorNombre(nuevoproducto.getTitulo());
+		//return productoPorNombre(nuevoproducto.getTitulo());
 	}
-	@Override
-	public void borrarProducto(Producto producto) throws SQLException{
 	
+	@Override
+	public void borrarProducto(Producto producto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+		
+		ut.begin();
+		em.remove(em.merge(producto));
+		ut.commit();
+		/*
 		PreparedStatement ps = con.prepareStatement(rb.getString("borrarProducto"));
 		ps.setInt(1, producto.getId());
 		ps.execute();
-		
+		*/
 	}
+	
+	/*
 	@Override
 	public Producto actualizarProducto(Producto producto) throws SQLException{
 	
@@ -119,6 +156,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return productoPorClave(producto.getId());
 		
 	}
+	*/
+	/*
 	@Override
 	public void setConexion(Connection con) {
 	
@@ -131,5 +170,5 @@ public class ProductoDAOImpl implements ProductoDAO {
 		this.rb = rb;
 		
 	}
-
+	*/
 }

@@ -42,7 +42,7 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 	public void init(ServletConfig config) throws ServletException{
 
 		this.config = config;
-		productoDao = new ProductoDAOImpl ();
+		productoDao = new ProductoDAOImpl (em,ut);
 	}
 
 
@@ -104,7 +104,7 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 			String nombre = request.getParameter("NombreProducto");
 			String categoria = request.getParameter("Categoria");
 			String descripcion = request.getParameter("Descripcion");
-			String precio = request.getParameter("Precio");
+			Double precio = Double.parseDouble(request.getParameter("Precio"));
 			String estado = request.getParameter("Estado");
 			
 
@@ -120,13 +120,13 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 				producto.setDescripcion(descripcion);
 			}
 			if(precio!=null){
-				//TENEMOS QUE VER COMO SE PASA EL PRECIO A DOUBLE DE UN STRING, O CAMBIARLO A STRING
-				//producto.setPrecio(precio);
+				producto.setPrecio(precio);
 			}
 			if(estado!=null){
 				producto.setEstado(estado);
 			}
-
+			producto.setUsuario(user);			
+			producto.setPicture(null);
 			try{
 				productoDao.crearProducto(producto);
 				//Se ha creado correctamente
@@ -136,18 +136,18 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 				PAGINA=MISPRODUCTOS_JSP;
 				e.printStackTrace();
 			}
+			
 		}else if(accion.equals("eliminar")){
 			try{
-				
+				//productoDao.borrarProducto(producto);
+				PAGINA=MISPRODUCTOS_JSP;
 			}catch(Exception e){
-				
+				PAGINA=MISPRODUCTOS_JSP;
 			}
+			
 		}else if(accion.equals("no_eliminar")){
-			try{
-				
-			}catch(Exception e){
-				
-			}
+			PAGINA=MISPRODUCTOS_JSP;	
+		
 		}else if(accion.equals("modificar")){
 			String nombre = request.getParameter("NombreProducto");
 			String categoria = request.getParameter("Categoria");
@@ -155,7 +155,7 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 			String precio = request.getParameter("Precio");
 			String estado = request.getParameter("Estado");
 			
-			//Este producto debe de ser el que se haya arcado, no se si por sesion id o como
+			//Este producto debe de ser el que se haya marcado, no se si por sesion id o como
 			Producto producto = new Producto();
 			
 			if(nombre!=null){
