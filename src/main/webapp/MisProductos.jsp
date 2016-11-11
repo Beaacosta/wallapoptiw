@@ -21,11 +21,22 @@
 			<h1><b>WALLAPOPTIW</b></h1>
 		</div>
 		<nav class="col-xs-12 col-sm-4">
-			<ul id="menu" class="nav navbar-nav navbar-right">
-				<li><a href="#"><img src="images/usuario.png" width="30"></a></li>
-				<li><a href="#"><img src="images/productos.png" width="30"></a></li>
-				<li><a href="#"><img src="images/chats.png" width=30"></a></li>
-			</ul>
+			<form action="productos" method="post">
+				<ul id="menu" class="nav navbar-nav navbar-right">
+					<li><button type="submit" name="accion" value="Editar"
+							class="btn btn-default">
+							<img src="images/usuario.png" width="30">
+						</button></li>
+					<li><button type="submit" name="accion" value="Productos"
+							class="btn btn-default">
+							<img src="images/productos.png" width="30">
+						</button></li>
+					<li><button type="submit" name="accion" value="Chat"
+							class="btn btn-default">
+							<img src="images/chats.png" width="30">
+						</button></li>
+				</ul>
+			</form>
 		</nav>	
 	</header>
 	
@@ -37,36 +48,38 @@
 					<div class="modal fade" id="ventanaAnyadirProd">
 						<div class="modal-dialog">
 							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title">Añade tu producto</h4>
-								</div>
-								<div class="modal-body">
-									<div class="form-group">
-										<label for="NombreProducto">Nombre del producto</label>
-										<input type="NombreProducto" class="form-control" id="NombreProducto" placeholder="NombreProducto">
+								<form action="productos" method="post">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h4 class="modal-title">Añade tu producto</h4>
 									</div>
-									<div class="form-group">
-										<label for="Categoria">Categoria</label>
-										<input type="Categoria" class="form-control" id="Categoria" placeholder="Categoria">
+									<div class="modal-body">
+										<div class="form-group">
+											<label for="NombreProducto">Nombre del producto</label>
+											<input type="NombreProducto" class="form-control" id="NombreProducto" name="NombreProducto" placeholder="NombreProducto">
+										</div>
+										<div class="form-group">
+											<label for="Categoria">Categoria</label>
+											<input type="Categoria" class="form-control" id="Categoria" name="Categoria" placeholder="Categoria">
+										</div>
+										<div class="form-group">
+											<label for="Descripcion">Descripcion</label>
+											<input type="Descripcion" class="form-control" id="Descripcion" name="Descripcion" placeholder="Descripcion">
+										</div>
+										<div class="form-group">
+											<label for="Precio">Precio</label>
+											<input type="Precio" class="form-control" id="Precio" name="Precio" placeholder="Precio">
+										</div>
+										<div class="form-group">
+											<label for="Estado">Estado</label>
+											<input type="Estado" class="form-control" id="Estado" name="Estado" placeholder="Disponible/Reservado/Vendido">
+										</div>
 									</div>
-									<div class="form-group">
-										<label for="Descripcion">Descripcion</label>
-										<input type="Descripcion" class="form-control" id="Descripcion" placeholder="Descripcion">
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+										<button type="hidden" name="accion" value="producto" class="btn btn-default">Guardar cambios</button>
 									</div>
-									<div class="form-group">
-										<label for="Precio">Precio</label>
-										<input type="Precio" class="form-control" id="Precio" placeholder="Precio">
-									</div>
-									<div class="form-group">
-										<label for="Estado">Estado</label>
-										<input type="Estado" class="form-control" id="Estado" placeholder="Disponible/Reservado/Vendido">
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-									<button type="button" class="btn btn-default">Guardar cambios</button>
-								</div>
+								</form>	
 							</div>
 						</div>	
 					</div>
@@ -93,8 +106,8 @@
 										<div class="modal-content">
 											<div class="modal-body black">
 													<span>¿Estás seguro de que quieres eliminar el producto?
-													<button type="button" class="btn btn-default">Si</button>
-													<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">No</button>		
+													<button type="hidden" name="accion" value="eliminar" class="btn btn-default">Si</button>
+													<button type="hidden" name="accion" value="no_eliminar" class="btn btn-default">No</button>		
 											</div>
 										</div>
 									</div>
@@ -131,7 +144,7 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-											<button type="button" class="btn btn-default">Guardar cambios</button>
+											<button type="hidden" name="accion" value="modificar" class="btn btn-default">Guardar cambios</button>	
 										</div>
 									</div>
 								</div>	
