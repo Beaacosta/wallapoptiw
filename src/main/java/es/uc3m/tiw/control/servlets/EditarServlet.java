@@ -24,6 +24,7 @@ public class EditarServlet extends HttpServlet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String MIPERFIL_JSP = "/MiPerfil-editar.jsp";
 	private static final String MICONTRASENYA_JSP = "/MiPerfil-contrasenya.jsp";
+	private static final String INDEX_JSP = "/Index.jsp";
 	private String PAGINA = "";
 
 	@PersistenceContext(unitName = "wallapoptiw")
@@ -36,8 +37,6 @@ public class EditarServlet extends HttpServlet implements Serializable{
 	
 	
 	public void init(ServletConfig config) throws ServletException{
-
-		System.out.println("HOLA");
 
 		this.config = config;
 		usuarioDAO = new UsuarioDAOImpl (em,ut);
@@ -56,6 +55,8 @@ public class EditarServlet extends HttpServlet implements Serializable{
 			throws ServletException, IOException {
 		
 		PAGINA=MIPERFIL_JSP;
+
+		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
 	}
 
 	/**
@@ -101,11 +102,11 @@ public class EditarServlet extends HttpServlet implements Serializable{
 			}
 			catch (Exception e){
 				PAGINA=MIPERFIL_JSP;
+				e.printStackTrace();
 				//Mensaje no se ha podido editar
 				System.out.println("NO");
 				
 			}
-		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
 	
 		}
 		
@@ -132,6 +133,7 @@ public class EditarServlet extends HttpServlet implements Serializable{
 					user=usuarioDAO.actualizarUsuario(user);
 					sesion.setAttribute("usuario_sesion", user);
 					PAGINA=MICONTRASENYA_JSP;
+					//Mensaje si se ha podido editar
 					System.out.println("SI");
 				}
 				catch (Exception e){
@@ -142,8 +144,21 @@ public class EditarServlet extends HttpServlet implements Serializable{
 				}
 			}
 			
-			config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);	
 		}
+		
+		if(accion.equals("Baja")){
+			HttpSession sesion = (HttpSession) request.getSession(false);
+			Usuario user = (Usuario) sesion.getAttribute("usuario_sesion");
+			
+			try{
+				usuarioDAO.borrarUsuario(user);
+				PAGINA=INDEX_JSP;
+			}catch(Exception e){
+				PAGINA=MIPERFIL_JSP;
+			}
+		}
+		
+		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);	
 	}
 
 }

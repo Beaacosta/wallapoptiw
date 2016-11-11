@@ -64,10 +64,10 @@
 						<span class="input-group-addon" id="basic-addon1">Ciudad</span>
 						<input type="text" class="form-control" value="${usuario_sesion.ciudad}"name="Ciudad" id="Ciudad" placeholder="Ciudad" aria-describedly="basic-addon1">
 					</div>
-					<a href="#">Dar de baja de la aplicación</a>
+					<button type="hidden" class="" name="accion" value="Baja">Dar de baja de la aplicación</button>
 					<br>
 					<br>
-					<button type="hidden" class="btn btn-default" name="accion" value="Guardar_">Guardar cambios</button>	
+					<button type="hidden" class="btn btn-default" name="accion" value="Guardar">Guardar cambios</button>	
 				</form>
 				<a href="PaginaPrincipal.jsp" class="btn btn-default">Ir a inicio</a>
 				
