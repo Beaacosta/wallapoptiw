@@ -23,7 +23,7 @@ import es.uc3m.tiw.modelo.daos.UsuarioDAOImpl;
 public class EditarServlet extends HttpServlet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String MIPERFIL_JSP = "/MiPerfil-editar.jsp";
-	//private static final String MICONTRASENYA_JSP = "/MiPerfil-contrasenya.jsp";
+	private static final String MICONTRASENYA_JSP = "/MiPerfil-contrasenya.jsp";
 	private String PAGINA = "";
 
 	@PersistenceContext(unitName = "wallapoptiw")
@@ -86,6 +86,7 @@ public class EditarServlet extends HttpServlet implements Serializable{
 				user.setApellidos(apellidos);
 			}
 			if(!email.equals("")){
+				//Comprobar que el email no exista ya en la bd
 				user.setMail(email);
 			}
 			if(!ciudad.equals("")){
@@ -104,10 +105,45 @@ public class EditarServlet extends HttpServlet implements Serializable{
 				System.out.println("NO");
 				
 			}
-			
-		}
 		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
+	
+		}
 		
+		if(accion.equals("Cambiar")){
+			HttpSession sesion = (HttpSession) request.getSession(false);
+			Usuario user = (Usuario) sesion.getAttribute("usuario_sesion");
+			
+			String cont_actual=request.getParameter("ContrasenyaActual");
+			String cont_nueva=request.getParameter("NuevaContrasenya");
+			String verif_cont=request.getParameter("VerificarContrasenya");							
+			
+			if(cont_actual.equals("")||cont_nueva.equals("")||verif_cont.equals("")){
+				PAGINA=MICONTRASENYA_JSP;
+				//No se ha podido cambiar la contraseña
+			}
+			else{
+				//Contraseña actual es correcta y coinciden las contraseñas nuevas
+				if((user.getPassword().equals(cont_actual))&&(cont_nueva.equals(verif_cont))){
+					user.setPassword(cont_nueva);
+					user.setPassVerif(cont_nueva);
+				}
+				
+				try{
+					user=usuarioDAO.actualizarUsuario(user);
+					sesion.setAttribute("usuario_sesion", user);
+					PAGINA=MICONTRASENYA_JSP;
+					System.out.println("SI");
+				}
+				catch (Exception e){
+					PAGINA=MICONTRASENYA_JSP;
+					//Mensaje no se ha podido editar
+					System.out.println("NO");
+					
+				}
+			}
+			
+			config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);	
+		}
 	}
 
 }

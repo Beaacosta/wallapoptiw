@@ -47,20 +47,23 @@
 				<h3>Contraseña</h3>
 				<h4>Cambia tu contraseña actual</h4>
 				<hr>
+				<form action="editar_usuario" method="post">
+				
 				<div class="input-group input_espaciado">
 					<span class="input-group-addon" id="basic-addon1">Contraseña actual</span>
-					<input type="text" class="form-control" id="ContrasenyaActual" placeholder="ContrasenyaActual" aria-describedly="basic-addon1">
+					<input type="text" class="form-control" name="ContrasenyaActual" id="ContrasenyaActual" placeholder="ContrasenyaActual" aria-describedly="basic-addon1">
 				</div>
 				<div class="input-group input_espaciado">
 					<span class="input-group-addon" id="basic-addon1">Nueva contraseña</span>
-					<input type="text" class="form-control" id="NuevaContrasenya" placeholder="NuevaContrasenya" aria-describedly="basic-addon1">
+					<input type="text" class="form-control" name="NuevaContrasenya" id="NuevaContrasenya" placeholder="NuevaContrasenya" aria-describedly="basic-addon1">
 				</div>
 				<div class="input-group input_espaciado">
 					<span class="input-group-addon" id="basic-addon1">Verificar nueva contraseña</span>
-					<input type="text" class="form-control" id="VerificarContrasenya" placeholder="VerificarContrasenya" aria-describedly="basic-addon1">
+					<input type="text" class="form-control" name="VerificarContrasenya" id="VerificarContrasenya" placeholder="VerificarContrasenya" aria-describedly="basic-addon1">
 				</div>
-				<button type="button" class="btn btn-default">Guardar cambios</button>	
-				<a href="PaginaPrincipal.jsp" class="btn btn-default">Ir a inicio</a>	
+				<button type="hidden" name="accion" value="Cambiar" class="btn btn-default">Guardar cambios</button>	
+				<a href="PaginaPrincipal.jsp" class="btn btn-default">Ir a inicio</a>
+				</form>	
 			</div>
 		</div>
 	</div>

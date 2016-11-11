@@ -67,7 +67,7 @@
 					<a href="#">Dar de baja de la aplicación</a>
 					<br>
 					<br>
-					<button type="hidden" class="btn btn-default" name="accion" value="Guardar">Guardar cambios</button>	
+					<button type="hidden" class="btn btn-default" name="accion" value="Guardar_">Guardar cambios</button>	
 				</form>
 				<a href="PaginaPrincipal.jsp" class="btn btn-default">Ir a inicio</a>
 				
