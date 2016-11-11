@@ -75,6 +75,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 	
+
 		PAGINA=INDEX_JSP;
 		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
 
@@ -113,7 +114,6 @@ public class InicioServlet extends HttpServlet implements Serializable{
 					 if (usuario==null) {
 						 PAGINA=INDEX_JSP;
 					 }else {
-						 String usuario_sesion="usuario_sesion";
 						 sesion.setAttribute("usuario_sesion", usuario);
 						 PAGINA=PPRINCIPAL_JSP;
 					 }
@@ -150,7 +150,6 @@ public class InicioServlet extends HttpServlet implements Serializable{
 				 if (usuario_bd.equals(null)) {
 					 try{
 						 usuarioDAO.crearUsuario(user);
-						 String usuario_sesion="usuario_sesion";
 						 sesion.setAttribute("usuario_sesion", user);
 						 PAGINA=PPRINCIPAL_JSP;
 					 }
@@ -163,7 +162,6 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			 }catch (NoResultException e){
 				 try{
 				 usuarioDAO.crearUsuario(user);
-				 String usuario_sesion="usuario_sesion";
 				 sesion.setAttribute("usuario_sesion", user);
 				 PAGINA=PPRINCIPAL_JSP;
 				 }

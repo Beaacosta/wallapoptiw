@@ -54,15 +54,15 @@
 					</div>
 					<div class="input-group input_espaciado">
 						<span class="input-group-addon" id="basic-addon1">Apellidos</span>
-						<input type="text" class="form-control" name="Apellidos" id="Apellidos" placeholder="Apellidos" aria-describedly="basic-addon1">
+						<input type="text" class="form-control" value="${usuario_sesion.apellidos}"name="Apellidos" id="Apellidos" placeholder="Apellidos" aria-describedly="basic-addon1">
 					</div>
 					<div class="input-group input_espaciado">
 						<span class="input-group-addon" id="basic-addon1">Email</span>
-						<input type="text" class="form-control" name="Email" id="Email" placeholder="Email" aria-describedly="basic-addon1">
+						<input type="text" class="form-control" value="${usuario_sesion.mail}"name="Email" id="Email" placeholder="Email" aria-describedly="basic-addon1">
 					</div>
 					<div class="input-group input_espaciado">
 						<span class="input-group-addon" id="basic-addon1">Ciudad</span>
-						<input type="text" class="form-control" name="Ciudad" id="Ciudad" placeholder="Ciudad" aria-describedly="basic-addon1">
+						<input type="text" class="form-control" value="${usuario_sesion.ciudad}"name="Ciudad" id="Ciudad" placeholder="Ciudad" aria-describedly="basic-addon1">
 					</div>
 					<a href="#">Dar de baja de la aplicación</a>
 					<br>
