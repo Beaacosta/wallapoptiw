@@ -151,10 +151,14 @@ public class InicioServlet extends HttpServlet implements Serializable{
 					PAGINA=INDEX_JSP;
 					Herramientas.anadirMensaje(request, "No se ha encontrado ningún usuario con los datos especificados");
 					e.printStackTrace();
-				}
-			}
-			config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
+				}				
+			}							
 		}
+
+
+
+
+
 
 
 		//caso de registrarse
