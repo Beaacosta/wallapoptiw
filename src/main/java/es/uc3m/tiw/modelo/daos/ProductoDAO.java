@@ -28,8 +28,6 @@ public interface ProductoDAO {
 	public abstract Producto crearProducto(Producto nuevoProducto) throws SQLException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException, NotSupportedException;
 
 	Producto buscarporUsuarioId(String id) throws NoResultException;
-	
-	public Collection<Producto> listarProductos() throws SQLException;
 
 	//public abstract Producto productoPorNombre(String nombre) throws SQLException;
 
