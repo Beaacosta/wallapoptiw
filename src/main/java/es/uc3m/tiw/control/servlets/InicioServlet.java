@@ -96,6 +96,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 
 		String accion = request.getParameter("accion");
 
+		
 		//caso iniciar sesion
 		if(accion.equals("IniciarSesion")){
 
@@ -113,6 +114,18 @@ public class InicioServlet extends HttpServlet implements Serializable{
 				sesion.setAttribute("mensajeRegistro", mensje);*/
 				PAGINA=INDEX_JSP;
 			}else if(email.equals("admin@admin.com") && password.equals("admin")){
+				try {
+					usuarios = (List<Usuario>) usuarioDAO.listarUsuarios();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				request.setAttribute("usuarios", usuarios);
+				PAGINA=PPRINCIPAL_ADMIN;
+				
+			}
+			
+			else if(email.equals("admin@admin.com") && password.equals("admin")){
 				try {
 					usuarios = (List<Usuario>) usuarioDAO.listarUsuarios();
 				} catch (SQLException e) {

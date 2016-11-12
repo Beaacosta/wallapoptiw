@@ -23,7 +23,7 @@ public interface ProductoDAO {
 
 	//public abstract void borrarProducto(Producto producto) throws SQLException;
 
-	public  Producto crearProducto(Producto nuevoproducto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException;
+	public abstract Producto crearProducto(Producto nuevoProducto) throws SQLException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException, NotSupportedException;
 
 	Producto buscarporUsuarioId(String id) throws NoResultException;
 
