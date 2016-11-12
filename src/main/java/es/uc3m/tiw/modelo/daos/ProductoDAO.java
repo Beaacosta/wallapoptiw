@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
+import javax.persistence.NoResultException;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -11,15 +12,20 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 
 import es.uc3m.tiw.modelo.Producto;
+import es.uc3m.tiw.modelo.Usuario;
 
 
 public interface ProductoDAO {
+	
+	public Collection<Producto> buscarProductosDeUsuario(Usuario usuario);
 	
 	//public abstract Producto actualizarProducto(Producto producto) throws SQLException;
 
 	//public abstract void borrarProducto(Producto producto) throws SQLException;
 
 	public  Producto crearProducto(Producto nuevoproducto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException;
+
+	Producto buscarporUsuarioId(String id) throws NoResultException;
 
 	//public abstract Producto productoPorNombre(String nombre) throws SQLException;
 

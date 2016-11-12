@@ -1,4 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import = "es.uc3m.tiw.modelo.Usuario"%>
+<%@ page import = "es.uc3m.tiw.modelo.Producto"%>
+<%@ page import = "es.uc3m.tiw.modelo.daos.ProductoDAO"%>
+<%@ page import = "es.uc3m.tiw.modelo.daos.ProductoDAOImpl"%>
+<%@ page import = "java.sql.Connection" %>
+<%@ page import = "javax.persistence.EntityManager" %>
+<%@ page import = "javax.transaction.UserTransaction" %>
+<%@ page import = "java.util.Collection" %>
+<%@ page import = "java.io.PrintWriter" %>
+
 <!DOCTYPE html>
+
 <html>
 
     <head>
@@ -44,14 +57,14 @@
 		<div class="row">
 			<div class="col-xs-3">
 				<ul class="nav nav-pills nav-stacked">
-					<li role="presentation"> <a href="#ventanaAnyadirProd" data-toggle="modal"><b>AÑADIR PRODUCTO</b></a></li>
+					<li role="presentation"> <a href="#ventanaAnyadirProd" data-toggle="modal"><b>AÃ‘ADIR PRODUCTO</b></a></li>
 					<div class="modal fade" id="ventanaAnyadirProd">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<form action="productos" method="post">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-										<h4 class="modal-title">Añade tu producto</h4>
+										<h4 class="modal-title">AÃ±ade tu producto</h4>
 									</div>
 									<div class="modal-body">
 										<div class="form-group">
@@ -86,6 +99,21 @@
 				</ul>
 			</div>
 			<div class="col-xs-9">
+				<%  
+				
+					Usuario user = new Usuario();
+					HttpSession sesion = (HttpSession) request.getSession(false);
+					user = (Usuario) sesion.getAttribute("usuario_sesion");								
+					EntityManager em = (EntityManager) sesion.getAttribute("em");
+					UserTransaction ut = (UserTransaction) sesion.getAttribute("ut");
+					ProductoDAOImpl prod = new ProductoDAOImpl(em, ut);
+					
+					Collection<Producto> coleccion = prod.buscarProductosDeUsuario(user);
+					for(Producto p: coleccion){
+						if(p.getUsuario().getId()== user.getId()){
+						sesion.setAttribute("prod_sesion", p);
+						
+				%>
 				<div class="col-xs-12 col-md-4 cajaproducto">
 					<div class="container">
 						<div class="row">
@@ -93,19 +121,19 @@
 								<img src="images/carrito.png" width="100" alt="imagenprod1">
 							</div>
 							<div class="col-xs-9 col-md-3 datos">
-								<h3>Nombre del producto</h3>
-								<h4>Categoria del producto</h4>
+								<h3>${prod_sesion.titulo}</h3>	
+							<h4>${prod_sesion.categoria}</h4>
 							</div>
 						</div>
 						<div class="row col-xs-12 col-md-4">
-							<h2 class="precio">Precio</h2>
+							<h2 class="precio">${prod_sesion.precio}</h2>
 							<div class="centrarbotones">
 							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#ventanaEliminarProd">Eliminar</button>
 								<div class="modal fade" id="ventanaEliminarProd">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-body black">
-													<span>¿Estás seguro de que quieres eliminar el producto?
+													<span>Â¿EstÃ¡s seguro de que quieres eliminar el producto?
 													<button type="hidden" name="accion" value="eliminar" class="btn btn-default">Si</button>
 													<button type="hidden" name="accion" value="no_eliminar" class="btn btn-default">No</button>		
 											</div>
@@ -123,23 +151,23 @@
 										<div class="modal-body">
 											<div class="form-group">
 												<label for="NombreProducto">Nombre del producto</label>
-												<input type="NombreProducto" class="form-control" id="NombreProducto" placeholder="NombreProducto">
+												<input type="NombreProducto" class="form-control" value="${prod.nombre}" id="NombreProducto" placeholder="NombreProducto">
 											</div>
 											<div class="form-group">
 												<label for="Categoria">Categoria</label>
-												<input type="Categoria" class="form-control" id="Categoria" placeholder="Categoria">
+												<input type="Categoria" class="form-control" value="${prod.categoria}" id="Categoria" placeholder="Categoria">
 											</div>
 											<div class="form-group">
 												<label for="Descripcion">Descripcion</label>
-												<input type="Descripcion" class="form-control" id="Descripcion" placeholder="Descripcion">
+												<input type="Descripcion" class="form-control" value="${prod.descripcion}"id="Descripcion" placeholder="Descripcion">
 											</div>
 											<div class="form-group">
 												<label for="Precio">Precio</label>
-												<input type="Precio" class="form-control" id="Precio" placeholder="Precio">
+												<input type="Precio" class="form-control" value="${prod.precio}"id="Precio" placeholder="Precio">
 											</div>
 											<div class="form-group">
 												<label for="Estado">Estado</label>
-												<input type="Estado" class="form-control" id="Estado" placeholder="Disponible/Reservado/Vendido">
+												<input type="Estado" class="form-control" value="${prod.nombre}"id="Estado" placeholder="Disponible/Reservado/Vendido">
 											</div>
 										</div>
 										<div class="modal-footer">
@@ -152,7 +180,9 @@
 							</div>
 						</div>
 					</div>
-				</div>	
+				</div>
+				<%}
+						}%>	
 			</div>
 		</div>
 	</div>
@@ -160,7 +190,7 @@
 		<div class="row">
 			<p>Wallapop, compra y vende productos</p>
 			<p>CONDICIONES DE USO. POLITICA DE PRIVACIDAD Y COOKIES</p>
-			<p>Copyright ©  2016 - Wallapop - de sus respectivos propietarios
+			<p>Copyright Â©  2016 - Wallapop - de sus respectivos propietarios
 		</div>
 	</footer>
 	

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -18,6 +19,7 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import es.uc3m.tiw.modelo.Producto;
+import es.uc3m.tiw.modelo.Usuario;
 
 
 public class ProductoDAOImpl implements ProductoDAO {
@@ -29,6 +31,11 @@ public class ProductoDAOImpl implements ProductoDAO {
 		super();
 		this.em = em;
 		this.ut = ut;
+	}
+	
+	public Collection<Producto> buscarProductosDeUsuario(Usuario usuario){
+		
+		return em.createQuery("select p from Producto p ",Producto.class).getResultList();
 	}
 	
 	/*
@@ -164,4 +171,10 @@ public class ProductoDAOImpl implements ProductoDAO {
 	}
 	*/
 
+	@Override
+	public Producto buscarporUsuarioId(String id) throws NoResultException {
+		// TODO Auto-generated method stub
+		return em.createQuery("select p from Producto p where p.usuario='"+id+"'", Producto.class).getSingleResult();
+	
+	}
 }
