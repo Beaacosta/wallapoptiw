@@ -198,4 +198,10 @@ ps.execute();*/
 		return em.createQuery("select p from Producto p where p.usuario='"+id+"'", Producto.class).getSingleResult();
 	
 	}
+	
+	public Collection<Producto> listarProductos() throws SQLException{
+		
+		return em.createQuery("select p from Producto p", Producto.class).getResultList();
+
+	}
 }

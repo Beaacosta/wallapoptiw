@@ -72,35 +72,33 @@
 
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<p>Listado de productos</p>
+			<p>Listado de usuarios</p>
 		</div>
 	</div>
 	
 	<table border="1" style="text-align:center; width:95%; margin: 0 20px;">
 		<tr class="text-center">
 			<th style="text-align:center;">Nombre</th>
-			<th style="text-align:center;">Categoría</th>
-			<th style="text-align:center;">Precio</th>
-			<th style="text-align:center;">Modificar</th>
-			<th style="text-align:center;">Borrar</th>		
+			<th style="text-align:center;">Apellidos</th>
+			<th style="text-align:center;">Email</th>
+			<th style="text-align:center;">Contactar</th>	
 		</tr>
 		<%  
 					HttpSession sesion = (HttpSession) request.getSession(false);
 					EntityManager em = (EntityManager) sesion.getAttribute("em");
 					UserTransaction ut = (UserTransaction) sesion.getAttribute("ut");
 					
-					ProductoDAOImpl producto_pintar = new ProductoDAOImpl(em,ut);
-					Collection<Producto> coleccion = producto_pintar.listarProductos();
+					UsuarioDAOImpl user_pintar = new UsuarioDAOImpl(em,ut);
+					Collection<Usuario> coleccion = user_pintar.listarUsuarios();
 					
-					for(Producto p: coleccion){
-						sesion.setAttribute("Producto_pintar", p);
+					for(Usuario u: coleccion){
+						sesion.setAttribute("Usuario_pintar", u);
 		%>
 		<tr>
-			<td>${Producto_pintar.titulo }</td> 
-			<td>${Producto_pintar.categoria }</td>
-			<td>${Producto_pintar.precio }</td>
-			<td><a href="usuario?accion=editar&id=${Producto_pintar.id }">Editar</a> </td>
-			<td><a href="usuario?accion=borrar&id=${Producto_pintar.id }">Borrar</a></td>
+			<td>${Usuario_pintar.nombre }</td> 
+			<td>${Usuario_pintar.apellidos }</td>
+			<td>${Usuario_pintar.mail }</td>
+			<td><a href="usuario?accion=contactar&id=${Usuario_pintar.id }">Contactar</a> </td>
 		</tr>
 		<%
 			} 

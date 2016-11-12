@@ -50,17 +50,9 @@
 		<nav class="col-xs-12 col-sm-4">
 			<form action="pag_principal_admin" method="post">
 				<ul id="menu" class="nav navbar-nav navbar-right">
-					<li><button type="submit" name="accion" value="Editar"
-							class="btn btn-default">
-							<img src="images/usuario.png" width="30">
-						</button></li>
-					<li><button type="hidden"
-							class="btn btn-default"><a href="Producto_admin.jsp"><img src="images/productos.png" width="30"></a>
-						</button></li>
-					<li><button type="submit" name="accion" value="Chat"
-							class="btn btn-default">
-							<img src="images/chats.png" width="30">
-						</button></li>
+					<li><a href="PaginaPrincipal_admin.jsp"><img src="images/usuario.png" width="30"></a></li>
+					<li><a href="Producto_admin.jsp"><img src="images/productos.png" width="30"></a></li>
+					<li><a href="Chat.jsp"><img src="images/chats.png" width="30"></a></li>
 				</ul>
 			</form>
 		</nav>
@@ -79,22 +71,19 @@
 	</div>
 
 	<div class="row">
-		<div class="col-xs-12">
-		<p>Listado de usuarios</p>
+		<div class="col-xs-12 text-center">
+			<p>Listado de usuarios</p>
+		</div>
 	</div>
 	
-	<!-- <c:if test="${empty usuarios}"> <!-- usuarios es un atributo metido en el request por eso no es necesario ponerle el prefijo param --> -->
-		<!-- <p class="error">Si no ves usuarios es porque has accedido directamente a la pagina y por tanto no has pasado por el servlet controlador y no hay datos en el objeto request.</p>  -->
-	<!-- </c:if> -->
-	<table border="1">
-		<tr>
-			<th>Nombre</th>
-			<th>Apellidos</th>
-			<th>Clave</th>
-			<th>Modificar</th>
-			<th>Borrar</th>		
+	<table border="1" style="text-align:center; width:95%; margin: 0 20px;">
+		<tr class="text-center">
+			<th style="text-align:center;">Nombre</th>
+			<th style="text-align:center;">Apellidos</th>
+			<th style="text-align:center;">Clave</th>
+			<th style="text-align:center;">Modificar</th>
+			<th style="text-align:center;">Borrar</th>		
 		</tr>
-		<!-- <c:forEach items="${usuarios }" var="usuario"> <!-- rLe vamos recorriendo toda la lista de usuarios --> 
 		<%  
 					HttpSession sesion = (HttpSession) request.getSession(false);
 					EntityManager em = (EntityManager) sesion.getAttribute("em");
@@ -116,9 +105,8 @@
 		<%
 			} 
 		%>
-		<!--  </c:forEach> -->
 	</table>
-
+	</div>
 	<footer class="container-fluid">
 		<div class="row">
 			<p>Wallapop, compra y vende productos</p>
