@@ -46,7 +46,7 @@
 		<div class="row">
 			<hr>
 			<div class="col-xs-3">
-				<h4>${usuario_sesion.nombre} ${usuario_sesion.apellidos}</h4>
+				<h4>Nombre de usuario</h4>
 				<br>
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation" class="active"><a href="MiPerfil-editar.jsp">Editar perfil</a></li>
