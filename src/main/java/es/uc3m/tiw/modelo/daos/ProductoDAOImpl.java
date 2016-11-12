@@ -9,6 +9,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.persistence.EntityManager;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
+
 import es.uc3m.tiw.modelo.Producto;
 
 
@@ -17,6 +25,14 @@ public class ProductoDAOImpl implements ProductoDAO {
 	private Connection con;
 	private ResourceBundle rb;
 	
+	private EntityManager em;
+	private UserTransaction ut;
+	
+	public ProductoDAOImpl(EntityManager em,UserTransaction ut){
+		super();
+		this.em=em;
+		this.ut=ut;
+	}
 	@Override
 	public Collection<Producto> listaProducto() throws SQLException{
 	
@@ -82,20 +98,25 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return producto;
 	}
 	@Override
-	public  Producto crearProducto(Producto nuevoproducto) throws SQLException{
+	public  Producto crearProducto(Producto nuevoproducto) throws SQLException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException, NotSupportedException{
 	
-		PreparedStatement ps = con.prepareStatement(rb.getString("crearProducto"));
-		ps.setString(1, nuevoproducto.getTitulo());
-		ps.setString(2, nuevoproducto.getCategoria());
-		ps.setString(3, nuevoproducto.getDescripcion());
+		ut.begin();
+		em.persist(nuevoproducto);
+		ut.commit();
+		return nuevoproducto;
+		
+		//PreparedStatement ps = con.prepareStatement(rb.getString("crearProducto"));
+		//ps.setString(1, nuevoproducto.getTitulo());
+		//ps.setString(2, nuevoproducto.getCategoria());
+		//ps.setString(3, nuevoproducto.getDescripcion());
 		//ps.setString(4, (String)nuevoproducto.getPrecio());
         //ps.setString(5, (enum)nuevoproducto.getEstado());
         //ps.setString(6, nuevoproducto.getPicture());
 
 
-		ps.execute();
+		//ps.execute();
 		
-		return productoPorNombre(nuevoproducto.getTitulo());
+		//return productoPorNombre(nuevoproducto.getTitulo());
 	}
 	@Override
 	public void borrarProducto(Producto producto) throws SQLException{

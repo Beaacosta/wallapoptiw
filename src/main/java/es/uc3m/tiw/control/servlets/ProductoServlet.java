@@ -42,7 +42,7 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 	public void init(ServletConfig config) throws ServletException{
 
 		this.config = config;
-		productoDao = new ProductoDAOImpl ();
+		productoDao = new ProductoDAOImpl (em,ut);
 	}
 
 
