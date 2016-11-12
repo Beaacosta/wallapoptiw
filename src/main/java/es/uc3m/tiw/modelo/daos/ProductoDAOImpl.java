@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
-<<<<<<< HEAD
-=======
 import javax.persistence.NoResultException;
->>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -41,16 +38,6 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return em.createQuery("select p from Producto p ",Producto.class).getResultList();
 	}
 	
-<<<<<<< HEAD
-	private EntityManager em;
-	private UserTransaction ut;
-	
-	public ProductoDAOImpl(EntityManager em,UserTransaction ut){
-		super();
-		this.em=em;
-		this.ut=ut;
-	}
-=======
 	/*
 >>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 	@Override
@@ -130,37 +117,30 @@ public class ProductoDAOImpl implements ProductoDAO {
 	
 	@Override
 	public  Producto crearProducto(Producto nuevoproducto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
->>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
+
 		ut.begin();
 		em.persist(nuevoproducto);
 		ut.commit();
 		return nuevoproducto;
-<<<<<<< HEAD
+
 		
 		//PreparedStatement ps = con.prepareStatement(rb.getString("crearProducto"));
 		//ps.setString(1, nuevoproducto.getTitulo());
 		//ps.setString(2, nuevoproducto.getCategoria());
 		//ps.setString(3, nuevoproducto.getDescripcion());
-=======
 		/*
 		PreparedStatement ps = con.prepareStatement(rb.getString("crearProducto"));
 		ps.setString(1, nuevoproducto.getTitulo());
 		ps.setString(2, nuevoproducto.getCategoria());
 		ps.setString(3, nuevoproducto.getDescripcion());
->>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 		//ps.setString(4, (String)nuevoproducto.getPrecio());
         //ps.setString(5, (enum)nuevoproducto.getEstado());
         //ps.setString(6, nuevoproducto.getPicture());
 
 
-		//ps.execute();
-		
-<<<<<<< HEAD
-		//return productoPorNombre(nuevoproducto.getTitulo());
-=======
+		//ps.execute()
 		return productoPorNombre(nuevoproducto.getTitulo());
 		*/
->>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 	}
 	/*
 	@Override

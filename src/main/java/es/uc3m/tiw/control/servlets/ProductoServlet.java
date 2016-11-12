@@ -42,11 +42,8 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 	public void init(ServletConfig config) throws ServletException{
 
 		this.config = config;
-<<<<<<< HEAD
 		productoDao = new ProductoDAOImpl (em,ut);
-=======
-		productoDao = new ProductoDAOImpl(em,ut);
->>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
+
 	}
 
 
