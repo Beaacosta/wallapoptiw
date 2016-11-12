@@ -19,6 +19,8 @@ public interface ProductoDAO {
 	
 	public Collection<Producto> buscarProductosDeUsuario(Usuario usuario);
 	
+	public Collection<Producto> listarProductos() throws SQLException;
+	
 	//public abstract Producto actualizarProducto(Producto producto) throws SQLException;
 
 	public void borrarProducto(Producto producto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException;
