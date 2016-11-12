@@ -60,7 +60,7 @@ public class Administrador_productos extends HttpServlet implements Serializable
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		HttpSession sesion = (HttpSession) request.getSession(false);
 		int id = Integer.parseInt(request.getParameter("id"));
 		String accion = request.getParameter("accion");
 		
@@ -69,12 +69,15 @@ public class Administrador_productos extends HttpServlet implements Serializable
 			try{
 				Producto product = null;
 				ProductoDAOImpl prod = new ProductoDAOImpl(em, ut);
-				product = productoDAO.productoPorClave(id);
-				
-				productoDAO.borrarProducto(product);
+				product = prod.productoPorClave(id);
+				prod.borrarProducto(product);
+				String mens ="Producto eliminado correctamente";
+				sesion.setAttribute("mensaje", mens);	
 				PAGINA=PRODUCTOS;
 			}
 			catch (Exception e){
+				String mens ="Producto no eliminado correctamente";
+				sesion.setAttribute("mensaje", mens);	
 				PAGINA=PRODUCTOS;
 				e.printStackTrace();
 				//mensaje no se ha podido eliminar
@@ -113,14 +116,15 @@ public class Administrador_productos extends HttpServlet implements Serializable
 				
 				try{
 					p=productoDAO.actualizarProducto(p);
+					String mens ="Producto actualizado correctamente";
+					sesion.setAttribute("mensaje", mens);	
 					PAGINA=PRODUCTOS;
-					System.out.println("SI");
 				}
 				catch (Exception e){
+					String mens ="Producto no actualizado correctamente";
+					sesion.setAttribute("mensaje", mens);	
 					PAGINA=PRODUCTOS;
-					e.printStackTrace();
-					//Mensaje no se ha podido editar
-					System.out.println("NO");		
+					e.printStackTrace();	
 				}
 			}
 			catch(Exception e){

@@ -74,13 +74,15 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 				productoDao.borrarProducto(productoBorrar);
 
 				//Se ha borrado el producto
-
+				String mens ="Producto eliminado correctamente";
+				sesion.setAttribute("mensaje", mens);
 				PAGINA=MISPRODUCTOS_JSP;
 
 			}catch(Exception e){
 
 				//No se ha borrado el producto
-
+				String mens ="Producto no eliminado correctamente";
+				sesion.setAttribute("mensaje", mens);
 				PAGINA=MISPRODUCTOS_JSP;
 			}
 			
@@ -118,13 +120,14 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 				try{
 					prod= productoDao.actualizarProducto(prod);
 					PAGINA=MISPRODUCTOS_JSP;
-					System.out.println("SI");
+					String mens ="Producto actualizado correctamente";
+					sesion.setAttribute("mensaje", mens);
 				}
 				catch (Exception e){
 					PAGINA=MISPRODUCTOS_JSP;
 					e.printStackTrace();
-					//Mensaje no se ha podido editar
-					System.out.println("NO");		
+					String mens ="Producto no actualizado correctamente";
+					sesion.setAttribute("mensaje", mens);	
 				}
 			}
 			catch(Exception e){
@@ -206,9 +209,13 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 			try{
 				productoDao.crearProducto(producto);
 				//Se ha creado correctamente
+				String mens ="Producto creado correctamente";
+				sesion.setAttribute("mensaje", mens);
 				PAGINA=MISPRODUCTOS_JSP;
 			}catch(Exception e){
 				//No se ha creado correctamente
+				String mens ="Producto no creado correctamente";
+				sesion.setAttribute("mensaje", mens);
 				PAGINA=MISPRODUCTOS_JSP;
 				e.printStackTrace();
 			}

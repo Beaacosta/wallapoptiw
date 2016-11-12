@@ -60,7 +60,8 @@ public class Administrador extends HttpServlet implements Serializable{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
+		HttpSession sesion = (HttpSession) request.getSession(false);
 		int id = Integer.parseInt(request.getParameter("id"));
 		String accion = request.getParameter("accion");
 		
@@ -78,9 +79,13 @@ public class Administrador extends HttpServlet implements Serializable{
 					prod_borrar.borrarProducto(p);
 				}
 				usuarioDAO.borrarUsuario(user);
+				String mens ="Usuario eliminado correctamente";
+				sesion.setAttribute("mensaje", mens);
 				PAGINA=USUARIOS;
 			}
 			catch (Exception e){
+				String mens ="Usuario no eliminado correctamente";
+				sesion.setAttribute("mensaje", mens);
 				PAGINA=USUARIOS;
 				e.printStackTrace();
 				//mensaje no se ha podido eliminar
@@ -121,13 +126,14 @@ public class Administrador extends HttpServlet implements Serializable{
 				try{
 					user=usuarioDAO.actualizarUsuario(user);
 					PAGINA=USUARIOS;
-					System.out.println("SI");
+					String mens ="Usuario actualizado correctamente";
+					sesion.setAttribute("mensaje", mens);
 				}
 				catch (Exception e){
 					PAGINA=USUARIOS;
 					e.printStackTrace();
-					//Mensaje no se ha podido editar
-					System.out.println("NO");		
+					String mens ="Usuario actualizado correctamente";
+					sesion.setAttribute("mensaje", mens);	
 				}
 			}
 			catch(Exception e){
