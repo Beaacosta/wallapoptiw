@@ -31,17 +31,15 @@ public class Producto implements Serializable {
     @Column
     private String picture;
     
-    
-	@ManyToOne(cascade = ALL)
+	@ManyToOne
 	private Usuario usuario;
 	
 	public Producto() {
 		// TODO Auto-generated constructor stub
 	}
-	public Producto(int id,String titulo, String categoria, String descripcion,
+	public Producto(String titulo, String categoria, String descripcion,
 			double precio, String estado, String picture) {
 		super();
-        this.id=id;
 		this.titulo = titulo;
 		this.categoria = categoria;
 		this.descripcion = descripcion;
@@ -85,13 +83,17 @@ public class Producto implements Serializable {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 	public Usuario getUsuario() {
 		return usuario;
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	
 	
 }

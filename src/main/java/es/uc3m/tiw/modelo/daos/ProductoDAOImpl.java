@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
+<<<<<<< HEAD
+=======
+import javax.persistence.NoResultException;
+>>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -18,13 +22,26 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import es.uc3m.tiw.modelo.Producto;
+import es.uc3m.tiw.modelo.Usuario;
 
 
 public class ProductoDAOImpl implements ProductoDAO {
 
-	private Connection con;
-	private ResourceBundle rb;
+	private EntityManager em;
+	private UserTransaction ut;
 	
+	public ProductoDAOImpl(EntityManager em, UserTransaction ut) {
+		super();
+		this.em = em;
+		this.ut = ut;
+	}
+	
+	public Collection<Producto> buscarProductosDeUsuario(Usuario usuario){
+		
+		return em.createQuery("select p from Producto p ",Producto.class).getResultList();
+	}
+	
+<<<<<<< HEAD
 	private EntityManager em;
 	private UserTransaction ut;
 	
@@ -33,6 +50,9 @@ public class ProductoDAOImpl implements ProductoDAO {
 		this.em=em;
 		this.ut=ut;
 	}
+=======
+	/*
+>>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 	@Override
 	public Collection<Producto> listaProducto() throws SQLException{
 	
@@ -56,6 +76,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 		}
 		return listaproductos;
 	}
+	*/
+	/*
 	@Override
 	public  Producto productoPorClave(int pk) throws SQLException{
 	
@@ -76,6 +98,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 		}
 		return producto;
 	}
+	*/
+	/*
 	@Override
 	
 	public Producto productoPorNombre(String titulo) throws SQLException{
@@ -97,18 +121,33 @@ public class ProductoDAOImpl implements ProductoDAO {
 		}
 		return producto;
 	}
+<<<<<<< HEAD
 	@Override
 	public  Producto crearProducto(Producto nuevoproducto) throws SQLException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException, NotSupportedException{
 	
+=======
+	*/
+	
+	@Override
+	public  Producto crearProducto(Producto nuevoproducto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+>>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 		ut.begin();
 		em.persist(nuevoproducto);
 		ut.commit();
 		return nuevoproducto;
+<<<<<<< HEAD
 		
 		//PreparedStatement ps = con.prepareStatement(rb.getString("crearProducto"));
 		//ps.setString(1, nuevoproducto.getTitulo());
 		//ps.setString(2, nuevoproducto.getCategoria());
 		//ps.setString(3, nuevoproducto.getDescripcion());
+=======
+		/*
+		PreparedStatement ps = con.prepareStatement(rb.getString("crearProducto"));
+		ps.setString(1, nuevoproducto.getTitulo());
+		ps.setString(2, nuevoproducto.getCategoria());
+		ps.setString(3, nuevoproducto.getDescripcion());
+>>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 		//ps.setString(4, (String)nuevoproducto.getPrecio());
         //ps.setString(5, (enum)nuevoproducto.getEstado());
         //ps.setString(6, nuevoproducto.getPicture());
@@ -116,8 +155,14 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 		//ps.execute();
 		
+<<<<<<< HEAD
 		//return productoPorNombre(nuevoproducto.getTitulo());
+=======
+		return productoPorNombre(nuevoproducto.getTitulo());
+		*/
+>>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 	}
+	/*
 	@Override
 	public void borrarProducto(Producto producto) throws SQLException{
 	
@@ -126,6 +171,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 		ps.execute();
 		
 	}
+	*/
+	/*
 	@Override
 	public Producto actualizarProducto(Producto producto) throws SQLException{
 	
@@ -140,6 +187,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return productoPorClave(producto.getId());
 		
 	}
+	*/
+	/*
 	@Override
 	public void setConexion(Connection con) {
 	
@@ -152,5 +201,12 @@ public class ProductoDAOImpl implements ProductoDAO {
 		this.rb = rb;
 		
 	}
+	*/
 
+	@Override
+	public Producto buscarporUsuarioId(String id) throws NoResultException {
+		// TODO Auto-generated method stub
+		return em.createQuery("select p from Producto p where p.usuario='"+id+"'", Producto.class).getSingleResult();
+	
+	}
 }

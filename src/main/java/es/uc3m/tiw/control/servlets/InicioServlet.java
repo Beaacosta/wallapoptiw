@@ -48,7 +48,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 
 	@PersistenceContext(unitName = "wallapoptiw")
 	private EntityManager em;
-
+	
 	@Resource
 	private UserTransaction ut;
 	private ServletConfig config;
@@ -101,6 +101,9 @@ public class InicioServlet extends HttpServlet implements Serializable{
 		if(accion.equals("IniciarSesion")){
 
 			HttpSession sesion = request.getSession(true);
+			sesion.setAttribute("em", em);
+			sesion.setAttribute("ut", ut);
+
 
 			Usuario usuario = null;
 			String email = request.getParameter("email");

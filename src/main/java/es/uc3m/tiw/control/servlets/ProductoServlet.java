@@ -42,7 +42,11 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 	public void init(ServletConfig config) throws ServletException{
 
 		this.config = config;
+<<<<<<< HEAD
 		productoDao = new ProductoDAOImpl (em,ut);
+=======
+		productoDao = new ProductoDAOImpl(em,ut);
+>>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 	}
 
 
@@ -125,6 +129,9 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 			if(estado!=null){
 				producto.setEstado(estado);
 			}
+			
+			producto.setPicture(null);
+			producto.setUsuario(user);
 
 			try{
 				productoDao.crearProducto(producto);
@@ -167,8 +174,7 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 				producto.setDescripcion(descripcion);
 			}
 			if(precio!=null){
-				//TENEMOS QUE VER COMO SE PASA EL PRECIO A DOUBLE DE UN STRING, O CAMBIARLO A STRING
-				//producto.setPrecio(precio);
+			//	producto.setPrecio(precio);
 			}
 			if(estado!=null){
 				producto.setEstado(estado);
