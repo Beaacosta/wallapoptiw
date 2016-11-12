@@ -99,8 +99,51 @@
 			<td>${Producto_pintar.titulo }</td> 
 			<td>${Producto_pintar.categoria }</td>
 			<td>${Producto_pintar.precio }</td>
-			<td><a href="usuario?accion=editar&id=${Producto_pintar.id }">Editar</a> </td>
-			<td><a href="usuario?accion=borrar&id=${Producto_pintar.id }">Borrar</a></td>
+			<td><a href="administrador_productos?accion=eliminar&id=${Usuario_pintar.id}">Borrar</a></td>
+			<td><button type="button" class="btn btn-default" data-toggle="modal"
+				data-target="#ventanaEditar" style="margin-left:15px;">Editar</button></td>
+			
+			<div class="modal fade" id="ventanaEditar">
+				<div class="modal-dialog">
+					<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Editar producto</h4>
+				</div>
+				<div class="modal-body">
+								<div class="form-group">
+									<label for="titulo">Nombre</label> <input type="titulo"
+										name="titulo" class="form-control" id="titulo" 
+										value="${Producto_pintar.titulo}" placeholder="titulo">
+								</div>
+								<div class="form-group">
+									<label for="Categoria">Categoria</label> <input type="text" name="Categoria" class="form-control" id="Categoria" 
+										value="${Producto_pintar.categoria}" placeholder="Categoria">
+								</div>
+								<div class="form-group">
+									<label for="Descripcion">Descripcion</label> <input
+										type="Descripcion" class="form-control" id="Descripcion"
+										name="Descripcion"
+										value="${Producto_pintar.descripcion}" placeholder="Descripcion">
+								</div>
+								<div class="form-group">
+									<label for="Precio">Precio</label> <input
+										type="Precio" class="form-control" id="Precio"
+										name="Precio"
+										value="${Producto_pintar.precio}" placeholder="Precio">
+								</div>
+								<div class="form-group">
+									<label for="Estado">Estado</label> <input type="Estado"
+										name="Estado" 
+										class="form-control" id="Estado" value="${Producto_pintar.estado}" placeholder="Estado">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal" aria-hidden="true">Cerrar</button>
+								<a href="administrador_productos?accion=editar&id=${Producto_pintar.id}">Editar</a>
+							</div>
 		</tr>
 		<%
 			} 
