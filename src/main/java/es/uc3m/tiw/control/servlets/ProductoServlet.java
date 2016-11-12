@@ -104,7 +104,7 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 			String nombre = request.getParameter("NombreProducto");
 			String categoria = request.getParameter("Categoria");
 			String descripcion = request.getParameter("Descripcion");
-			String precio = request.getParameter("Precio");
+			Double precio = Double.parseDouble(request.getParameter("Precio"));
 			String estado = request.getParameter("Estado");
 			
 
@@ -120,8 +120,7 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 				producto.setDescripcion(descripcion);
 			}
 			if(precio!=null){
-				//TENEMOS QUE VER COMO SE PASA EL PRECIO A DOUBLE DE UN STRING, O CAMBIARLO A STRING
-				//producto.setPrecio(precio);
+				producto.setPrecio(precio);
 			}
 			if(estado!=null){
 				producto.setEstado(estado);
