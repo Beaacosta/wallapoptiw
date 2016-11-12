@@ -76,6 +76,7 @@
 		</div>
 	</div>
 	
+<<<<<<< HEAD
 	<table border="1" style="text-align:center; width:95%; margin: 0 20px;">
 		<tr class="text-center">
 			<th style="text-align:center;">Nombre</th>
@@ -83,6 +84,19 @@
 			<th style="text-align:center;">Clave</th>
 			<th style="text-align:center;">Modificar</th>
 			<th style="text-align:center;">Borrar</th>		
+=======
+	<!-- <c:if test="${empty usuarios}"> <!-- usuarios es un atributo metido en el request por eso no es necesario ponerle el prefijo param --> -->
+		<!-- <p class="error">Si no ves usuarios es porque has accedido directamente a la pagina y por tanto no has pasado por el servlet controlador y no hay datos en el objeto request.</p>  -->
+	<!-- </c:if> -->
+	<form action="administrador" method="post">
+	<table border="1">
+		<tr>
+			<th>Nombre</th>
+			<th>Apellidos</th>
+			<th>Clave</th>
+			<th>Borrar</th>	
+			<th>Modificar</th>
+>>>>>>> 32031db4d6d4d09db04b2323fdef27374f042b52
 		</tr>
 		<%  
 					HttpSession sesion = (HttpSession) request.getSession(false);
@@ -99,14 +113,62 @@
 			<td>${Usuario_pintar.nombre }</td> 
 			<td>${Usuario_pintar.apellidos }</td>
 			<td>${Usuario_pintar.password }</td>
-			<td><a href="usuario?accion=editar&id=${Usuario_pintar.id }">Editar</a> </td>
-			<td><a href="usuario?accion=borrar&id=${Usuario_pintar.id }">Borrar</a></td>
+			<td><a href="administrador?accion=eliminar_usuario&id=${Usuario_pintar.id}">Borrar</a></td>
+			<td><button type="button" class="btn btn-default" data-toggle="modal"
+				data-target="#ventanaEditar" style="margin-left:15px;">Editar</button></td>
+			
+			<div class="modal fade" id="ventanaEditar">
+				<div class="modal-dialog">
+					<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Editar usuario</h4>
+				</div>
+				<div class="modal-body">
+								<div class="form-group">
+									<label for="InputEmail">Email</label> <input type="email"
+										name="InputEmail" class="form-control" id="InputEmail" 
+										value="${Usuario_pintar.mail}" placeholder="Email">
+								</div>
+								<div class="form-group">
+									<label for="Nombre">Nombre</label> <input type="text" name="Nombre" class="form-control" id="Nombre" 
+										value="${Usuario_pintar.nombre}" placeholder="Nombre">
+								</div>
+								<div class="form-group">
+									<label for="Apellidos">Apellidos</label> <input
+										type="apellidos" class="form-control" id="Apellidos"
+										name="Apellidos"
+										value="${Usuario_pintar.apellidos}" placeholder="Apellidos">
+								</div>
+								<div class="form-group">
+									<label for="Contrasenya">Contrasenya</label> <input
+										type="contrasenya" class="form-control" id="Contrasenya"
+										name="Contrasenya"
+										value="${Usuario_pintar.password}" placeholder="Contrasenya">
+								</div>
+								<div class="form-group">
+									<label for="Ciudad">Ciudad</label> <input type="ciudad"
+										name="Ciudad" 
+										class="form-control" id="Ciudad" value="${Usuario_pintar.ciudad}" placeholder="Ciudad">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal" aria-hidden="true">Cerrar</button>
+								<a href="administrador?accion=editar_usuario&id=${Usuario_pintar.id}">Editar</a>
+							</div>
 		</tr>
 		<%
 			} 
 		%>
 	</table>
+<<<<<<< HEAD
 	</div>
+=======
+	</form>
+
+>>>>>>> 32031db4d6d4d09db04b2323fdef27374f042b52
 	<footer class="container-fluid">
 		<div class="row">
 			<p>Wallapop, compra y vende productos</p>

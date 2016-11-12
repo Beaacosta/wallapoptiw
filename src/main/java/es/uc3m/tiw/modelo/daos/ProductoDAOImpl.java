@@ -64,10 +64,12 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return listaproductos;
 	}
 	*/
-	/*
+	
 	@Override
 	public  Producto productoPorClave(int pk) throws SQLException{
 	
+		return em.find(Producto.class, pk);
+		/*
 		PreparedStatement ps = con.prepareStatement(rb.getString("seleccionarproductoPK"));
 		ps.setInt(1, pk);
 		Producto producto = null;
@@ -83,9 +85,9 @@ public class ProductoDAOImpl implements ProductoDAO {
             //producto.setPicture (resutados.getPicture("picture"));
 			
 		}
-		return producto;
+		return producto;*/
 	}
-	*/
+	
 	/*
 	@Override
 	
@@ -198,10 +200,23 @@ ps.execute();*/
 		return em.createQuery("select p from Producto p where p.usuario='"+id+"'", Producto.class).getSingleResult();
 	
 	}
+<<<<<<< HEAD
 	
 	public Collection<Producto> listarProductos() throws SQLException{
 		
 		return em.createQuery("select p from Producto p", Producto.class).getResultList();
 
 	}
+=======
+
+	@Override
+	public Producto actualizarProducto(Producto producto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+
+		ut.begin();
+		em.merge(producto);
+		ut.commit();
+		return producto;
+	}
+	
+>>>>>>> 32031db4d6d4d09db04b2323fdef27374f042b52
 }

@@ -32,9 +32,7 @@ public class Usuario implements Serializable {
 	
 	/*@OneToOne(cascade = ALL)
 	private Direccion direccion;*/
-	
-	//@OneToMany -Agregar campos a la tabla por ejemplo lista de productos
-	
+		
 	public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
