@@ -142,16 +142,25 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return productoPorNombre(nuevoproducto.getTitulo());
 		*/
 	}
-	/*
-	@Override
-	public void borrarProducto(Producto producto) throws SQLException{
 	
-		PreparedStatement ps = con.prepareStatement(rb.getString("borrarProducto"));
-		ps.setInt(1, producto.getId());
-		ps.execute();
+	@Override
+	public void borrarProducto(Producto producto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+
+		ut.begin();
 		
-	}
-	*/
+		em.remove(em.merge(producto));
+		
+		ut.commit();
+		
+		
+/*PreparedStatement ps = con.prepareStatement(rb.getString("borrarUsuario"));
+		
+ps.setInt(1, usuario.getId());
+		
+ps.execute();*/
+
+	
+}
 	/*
 	@Override
 	public Producto actualizarProducto(Producto producto) throws SQLException{

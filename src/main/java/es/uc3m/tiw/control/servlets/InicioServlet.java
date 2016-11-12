@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 import javax.transaction.UserTransaction;
 
+import es.uc3m.tiw.control.validaciones.Herramientas;
 import es.uc3m.tiw.modelo.Usuario;
 import es.uc3m.tiw.modelo.daos.UsuarioDAO;
 import es.uc3m.tiw.modelo.daos.UsuarioDAOImpl;
@@ -108,8 +109,11 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			Usuario usuario = null;
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-
-			if(email.equals("")||password.equals("")){
+			
+			boolean mailTrue = Herramientas.validarMail(email);
+			boolean passTrue = Herramientas.validarPass(password);
+			
+			if((mailTrue && passTrue)==false){
 				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
 				sesion.setAttribute("mensajeRegistro", mensje);*/
 				PAGINA=INDEX_JSP;
@@ -126,6 +130,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			}
 			
 			else if(email.equals("admin@admin.com") && password.equals("admin")){
+				/*
 				try {
 					usuarios = (List<Usuario>) usuarioDAO.listarUsuarios();
 				} catch (SQLException e) {
@@ -133,6 +138,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 					e.printStackTrace();
 				}
 				request.setAttribute("usuarios", usuarios);
+				*/
 				PAGINA=PPRINCIPAL_ADMIN;
 				
 			}
