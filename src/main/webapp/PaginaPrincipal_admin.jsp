@@ -76,27 +76,16 @@
 		</div>
 	</div>
 	
-<<<<<<< HEAD
+		
+
+	<form action="administrador" method="post">
 	<table border="1" style="text-align:center; width:95%; margin: 0 20px;">
 		<tr class="text-center">
 			<th style="text-align:center;">Nombre</th>
 			<th style="text-align:center;">Apellidos</th>
 			<th style="text-align:center;">Clave</th>
 			<th style="text-align:center;">Modificar</th>
-			<th style="text-align:center;">Borrar</th>		
-=======
-	<!-- <c:if test="${empty usuarios}"> <!-- usuarios es un atributo metido en el request por eso no es necesario ponerle el prefijo param --> -->
-		<!-- <p class="error">Si no ves usuarios es porque has accedido directamente a la pagina y por tanto no has pasado por el servlet controlador y no hay datos en el objeto request.</p>  -->
-	<!-- </c:if> -->
-	<form action="administrador" method="post">
-	<table border="1">
-		<tr>
-			<th>Nombre</th>
-			<th>Apellidos</th>
-			<th>Clave</th>
-			<th>Borrar</th>	
-			<th>Modificar</th>
->>>>>>> 32031db4d6d4d09db04b2323fdef27374f042b52
+			<th style="text-align:center;">Borrar</th>	
 		</tr>
 		<%  
 					HttpSession sesion = (HttpSession) request.getSession(false);
@@ -163,12 +152,8 @@
 			} 
 		%>
 	</table>
-<<<<<<< HEAD
 	</div>
-=======
 	</form>
-
->>>>>>> 32031db4d6d4d09db04b2323fdef27374f042b52
 	<footer class="container-fluid">
 		<div class="row">
 			<p>Wallapop, compra y vende productos</p>

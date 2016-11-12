@@ -200,15 +200,12 @@ ps.execute();*/
 		return em.createQuery("select p from Producto p where p.usuario='"+id+"'", Producto.class).getSingleResult();
 	
 	}
-<<<<<<< HEAD
 	
 	public Collection<Producto> listarProductos() throws SQLException{
 		
 		return em.createQuery("select p from Producto p", Producto.class).getResultList();
 
 	}
-=======
-
 	@Override
 	public Producto actualizarProducto(Producto producto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
 
@@ -218,5 +215,4 @@ ps.execute();*/
 		return producto;
 	}
 	
->>>>>>> 32031db4d6d4d09db04b2323fdef27374f042b52
 }
