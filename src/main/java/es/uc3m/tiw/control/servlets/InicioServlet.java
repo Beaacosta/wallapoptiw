@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -42,6 +43,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String INDEX_JSP = "/Index.jsp";
 	private static final String PPRINCIPAL_JSP = "/PaginaPrincipal.jsp";
+	private static final String PPRINCIPAL_ADMIN= "/PaginaPrincipal_admin.jsp";
 	private String PAGINA = "";
 
 	@PersistenceContext(unitName = "wallapoptiw")
@@ -51,6 +53,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 	private UserTransaction ut;
 	private ServletConfig config;
 	private UsuarioDAO usuarioDAO;
+	private List<Usuario> usuarios;
 	Collection<Usuario> u = null;
 
 
@@ -109,6 +112,16 @@ public class InicioServlet extends HttpServlet implements Serializable{
 				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
 				sesion.setAttribute("mensajeRegistro", mensje);*/
 				PAGINA=INDEX_JSP;
+			}else if(email.equals("admin@admin.com") && password.equals("admin")){
+				try {
+					usuarios = (List<Usuario>) usuarioDAO.listarUsuarios();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				request.setAttribute("usuarios", usuarios);
+				PAGINA=PPRINCIPAL_ADMIN;
+				
 			}
 			
 			else{
