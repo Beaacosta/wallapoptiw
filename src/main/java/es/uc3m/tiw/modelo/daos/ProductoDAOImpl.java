@@ -38,6 +38,11 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return em.createQuery("select p from Producto p ",Producto.class).getResultList();
 	}
 	
+	
+public Collection<Producto> listarProductos() throws SQLException{
+		
+		return em.createQuery("select p from Producto p", Producto.class).getResultList();
+}
 	/*
 >>>>>>> 4f6c91a14d67991f6a56ee6c7a33c097f23ead40
 	@Override
