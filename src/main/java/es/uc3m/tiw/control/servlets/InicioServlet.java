@@ -120,6 +120,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			}
 			
 			else if(email.equals("admin@admin.com") && password.equals("admin")){
+				/*
 				try {
 					usuarios = (List<Usuario>) usuarioDAO.listarUsuarios();
 				} catch (SQLException e) {
@@ -127,6 +128,7 @@ public class InicioServlet extends HttpServlet implements Serializable{
 					e.printStackTrace();
 				}
 				request.setAttribute("usuarios", usuarios);
+				*/
 				PAGINA=PPRINCIPAL_ADMIN;
 				
 			}
