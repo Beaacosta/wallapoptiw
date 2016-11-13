@@ -2,6 +2,7 @@ package es.uc3m.tiw.control.servlets;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -15,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 
+import es.uc3m.tiw.modelo.Producto;
 import es.uc3m.tiw.modelo.Usuario;
+import es.uc3m.tiw.modelo.daos.ProductoDAOImpl;
 import es.uc3m.tiw.modelo.daos.UsuarioDAO;
 import es.uc3m.tiw.modelo.daos.UsuarioDAOImpl;
 
@@ -164,8 +167,14 @@ public class EditarServlet extends HttpServlet implements Serializable{
 		}
 		
 		if(accion.equals("Baja")){
-			
+			ProductoDAOImpl prod = new ProductoDAOImpl(em, ut);
+
 			try{
+				Collection<Producto> productos=prod.buscarProductosDeUsuario(user);
+				for(Producto p: productos){
+					ProductoDAOImpl prod_borrar = new ProductoDAOImpl(em, ut);
+					prod_borrar.borrarProducto(p);
+				}
 				usuarioDAO.borrarUsuario(user);
 				PAGINA=INDEX_JSP;
 			}catch(Exception e){

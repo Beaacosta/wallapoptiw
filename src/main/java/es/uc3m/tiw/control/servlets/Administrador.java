@@ -1,7 +1,9 @@
 package es.uc3m.tiw.control.servlets;
 
+
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -16,8 +18,13 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 
 import es.uc3m.tiw.modelo.Usuario;
+import es.uc3m.tiw.modelo.Producto;
 import es.uc3m.tiw.modelo.daos.UsuarioDAO;
+import es.uc3m.tiw.modelo.daos.ProductoDAO;
+
 import es.uc3m.tiw.modelo.daos.UsuarioDAOImpl;
+import es.uc3m.tiw.modelo.daos.ProductoDAOImpl;
+
 
 @WebServlet("/administrador")
 public class Administrador extends HttpServlet implements Serializable{
@@ -62,7 +69,15 @@ public class Administrador extends HttpServlet implements Serializable{
 			
 			try{
 				Usuario user = null;
+				ProductoDAOImpl prod = new ProductoDAOImpl(em, ut);
 				user = usuarioDAO.recuperarUnUsuarioPorClave(id);
+				
+				
+				Collection<Producto> productos=prod.buscarProductosDeUsuario(user);
+				for(Producto p: productos){
+					ProductoDAOImpl prod_borrar = new ProductoDAOImpl(em, ut);
+					prod_borrar.borrarProducto(p);
+				}
 				usuarioDAO.borrarUsuario(user);
 				PAGINA=USUARIOS;
 			}
@@ -74,6 +89,8 @@ public class Administrador extends HttpServlet implements Serializable{
 			}
 	
 		}
+		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);	
+
 	}
 
 	/**
