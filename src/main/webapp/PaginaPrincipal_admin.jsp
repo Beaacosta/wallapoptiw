@@ -1,3 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import = "es.uc3m.tiw.modelo.Usuario"%>
+<%@ page import = "es.uc3m.tiw.modelo.Producto"%>
+<%@ page import = "es.uc3m.tiw.modelo.daos.ProductoDAO"%>
+<%@ page import = "es.uc3m.tiw.modelo.daos.ProductoDAOImpl"%>
+<%@ page import = "es.uc3m.tiw.modelo.daos.UsuarioDAO"%>
+<%@ page import = "es.uc3m.tiw.modelo.daos.UsuarioDAOImpl"%>
+<%@ page import = "java.sql.Connection" %>
+<%@ page import = "javax.persistence.EntityManager" %>
+<%@ page import = "javax.transaction.UserTransaction" %>
+<%@ page import = "java.util.Collection" %>
+<%@ page import = "java.io.PrintWriter" %>
 <!DOCTYPE html>
 <html>
 
@@ -70,9 +83,9 @@
 		<p>Listado de usuarios</p>
 	</div>
 	
-	<c:if test="${empty usuarios}"> <!-- usuarios es un atributo metido en el request por eso no es necesario ponerle el prefijo param -->
-		<p class="error">Si no ves usuarios es porque has accedido directamente a la pagina y por tanto no has pasado por el servlet controlador y no hay datos en el objeto request.</p>
-	</c:if>
+	<!-- <c:if test="${empty usuarios}"> <!-- usuarios es un atributo metido en el request por eso no es necesario ponerle el prefijo param --> -->
+		<!-- <p class="error">Si no ves usuarios es porque has accedido directamente a la pagina y por tanto no has pasado por el servlet controlador y no hay datos en el objeto request.</p>  -->
+	<!-- </c:if> -->
 	<table border="1">
 		<tr>
 			<th>Nombre</th>
@@ -81,23 +94,36 @@
 			<th>Modificar</th>
 			<th>Borrar</th>		
 		</tr>
-		<c:forEach items="${usuarios }" var="usuario"> <!-- rLe vamos recorriendo toda la lista de usuarios -->
+		<!-- <c:forEach items="${usuarios }" var="usuario"> <!-- rLe vamos recorriendo toda la lista de usuarios --> 
+		<%  
+					HttpSession sesion = (HttpSession) request.getSession(false);
+					EntityManager em = (EntityManager) sesion.getAttribute("em");
+					UserTransaction ut = (UserTransaction) sesion.getAttribute("ut");
+					
+					UsuarioDAOImpl user_pintar = new UsuarioDAOImpl(em,ut);
+					Collection<Usuario> coleccion = user_pintar.listarUsuarios();
+					
+					for(Usuario u: coleccion){
+						sesion.setAttribute("Usuario_pintar", u);
+		%>
 		<tr>
-			<td>${usuario.nombre }</td> 
-			<td>${usuario.apellidos }</td>
-			<td>${usuario.password }</td>
-			<td><a href="usuario?accion=editar&id=${usuario.id }">Editar</a> </td>
-			<td><a href="usuario?accion=borrar&id=${usuario.id }">Borrar</a></td>
+			<td>${Usuario_pintar.nombre }</td> 
+			<td>${Usuario_pintar.apellidos }</td>
+			<td>${Usuario_pintar.password }</td>
+			<td><a href="usuario?accion=editar&id=${Usuario_pintar.id }">Editar</a> </td>
+			<td><a href="usuario?accion=borrar&id=${Usuario_pintar.id }">Borrar</a></td>
 		</tr>
-
-		</c:forEach>
+		<%
+			} 
+		%>
+		<!--  </c:forEach> -->
 	</table>
 
 	<footer class="container-fluid">
 		<div class="row">
 			<p>Wallapop, compra y vende productos</p>
 			<p>CONDICIONES DE USO. POLITICA DE PRIVACIDAD Y COOKIES</p>
-			<p>Copyright © 2016 - Wallapop - de sus respectivos propietarios			
+			<p>Copyright Â© 2016 - Wallapop - de sus respectivos propietarios			
 		</div>
 	</footer>
 
