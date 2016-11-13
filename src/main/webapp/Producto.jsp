@@ -1,3 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import = "es.uc3m.tiw.modelo.Usuario"%>
+<%@ page import = "es.uc3m.tiw.modelo.Producto"%>
+<%@ page import = "es.uc3m.tiw.modelo.daos.ProductoDAO"%>
+<%@ page import = "es.uc3m.tiw.modelo.daos.ProductoDAOImpl"%>
+<%@ page import = "java.sql.Connection" %>
+<%@ page import = "javax.persistence.EntityManager" %>
+<%@ page import = "javax.transaction.UserTransaction" %>
+<%@ page import = "java.util.Collection" %>
+<%@ page import = "java.io.PrintWriter" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -29,17 +41,30 @@
 		</nav>	
 	</header>
 	
+	<%  
+			
+			int id=Integer.parseInt(request.getParameter("id"));
+			HttpSession sesion = (HttpSession) request.getSession(false);
+			EntityManager em = (EntityManager) sesion.getAttribute("em");
+			UserTransaction ut = (UserTransaction) sesion.getAttribute("ut");
+			ProductoDAOImpl prod = new ProductoDAOImpl(em, ut);
+	
+			Producto producto = prod.productoPorClave(id);
+			sesion.setAttribute("producto", producto);
+
+	%>
+	
 	<div class="container-fluid">
 		<div class="row col-xs-12 producto container-fluid">
 			<div class="row" id="cajaproducto_linea1">
 				<div class="col-xs-4">
-					<span>CATEGORIA</span>
+					<span>${producto.categoria}</span>
 				</div>
 				<div class="col-xs-4">
-					<span>REFERENCIA</span>
+					<span>${producto.id}</span>
 				</div>
 				<div class="col-xs-4">
-					<span>ESTADO</span>
+					<span>${producto.estado}</span>
 				</div>
 			<hr>
 			</div>
@@ -48,12 +73,9 @@
 					<img src="images/carrito.png" width="150" alt="imagenprod">
 				</div>
 				<div class="col-xs-12 col-sm-9">
-					<h2>Nombre del producto</h2>
-					<p>DescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcion
-					DescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcion
-					DescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcion
-					DescripcionDescripcionDescripcionDescripcionDescripcionDescripcion</p>
-					<h4 class="precio">Precio</h4>
+					<h2>${producto.titulo}</h2>
+					<p>${producto.descripcion}</p>
+					<h4 class="precio">${producto.precio}</h4>
 				</div>
 			</div>
 			<div class="row">
@@ -66,7 +88,7 @@
 		<div class="row">
 			<p>Wallapop, compra y vende productos</p>
 			<p>CONDICIONES DE USO. POLITICA DE PRIVACIDAD Y COOKIES</p>
-			<p>Copyright ©  2016 - Wallapop - de sus respectivos propietarios
+			<p>Copyright Â©  2016 - Wallapop - de sus respectivos propietarios
 		</div>
 	</footer>
 	

@@ -205,4 +205,14 @@ ps.execute();*/
 		return em.createQuery("select p from Producto p where p.usuario='"+id+"'", Producto.class).getSingleResult();
 	
 	}
+
+	@Override
+	public Producto actualizarProducto(Producto producto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+
+		ut.begin();
+		em.merge(producto);
+		ut.commit();
+		return producto;
+	}
+	
 }
