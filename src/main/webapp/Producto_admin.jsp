@@ -90,8 +90,8 @@
 			<th style="text-align:center;">Nombre</th>
 			<th style="text-align:center;">Categoría</th>
 			<th style="text-align:center;">Precio</th>
-			<th style="text-align:center;">Modificar</th>
 			<th style="text-align:center;">Borrar</th>		
+			<th style="text-align:center;">Modificar</th>
 		</tr>
 		<%  
 					EntityManager em = (EntityManager) sesion.getAttribute("em");
@@ -107,7 +107,7 @@
 			<td>${Producto_pintar.titulo }</td> 
 			<td>${Producto_pintar.categoria }</td>
 			<td>${Producto_pintar.precio }</td>
-			<td><a href="administrador_productos?accion=eliminar&id=${Usuario_pintar.id}">Borrar</a></td>
+			<td><a href="administrador_productos?accion=eliminar&id=${Producto_pintar.id}">Borrar</a></td>
 			<td><button type="button" class="btn btn-default" data-toggle="modal"
 				data-target="#ventanaEditar" style="margin-left:15px;">Editar</button></td>
 			
