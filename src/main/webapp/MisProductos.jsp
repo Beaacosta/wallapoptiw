@@ -109,9 +109,16 @@
 					ProductoDAOImpl prod = new ProductoDAOImpl(em, ut);
 					
 					Collection<Producto> coleccion = prod.buscarProductosDeUsuario(user);
-					for(Producto p: coleccion){
-						if(p.getUsuario().getId()== user.getId()){
-						sesion.setAttribute("prod_sesion", p);
+					if(coleccion.isEmpty()){
+				%>
+				<div class="col-xs-12 col-md-4 cajaproducto">
+					<p> No tienes productos disponibles</p>
+				</div>
+				<% 	
+					}else{
+						for(Producto p: coleccion){
+							if(p.getUsuario().getId()== user.getId()){
+							sesion.setAttribute("prod_sesion", p);
 						
 				%>
 				<form action="productos" method="post">
@@ -190,8 +197,9 @@
 					</div>
 				</div>
 				</form>
-				<%}
-						}%>	
+				<%	}
+				}
+				}%>	
 			</div>
 		</div>
 	</div>
