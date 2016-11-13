@@ -142,9 +142,20 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 		}else if(accion.equals("eliminar")){
 			try{
 				
-			}catch(Exception e){
-				
-			}
+				Producto productoBorrar= (Producto) sesion.getAttribute("prod_sesion");
+				productoDao.borrarProducto(productoBorrar);
+								
+				//Se ha borrado el producto
+								
+				PAGINA=MISPRODUCTOS_JSP;
+							
+				}catch(Exception e){
+						
+				//No se ha borrado el producto
+					
+				PAGINA=MISPRODUCTOS_JSP;
+				}
+
 		}else if(accion.equals("no_eliminar")){
 			try{
 				
