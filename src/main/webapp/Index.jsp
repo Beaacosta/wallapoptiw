@@ -83,8 +83,7 @@
 										placeholder="Email">
 								</div>
 								<div class="form-group">
-									<label for="Nombre">Nombre</label> <input type="nombre"
-										name="Nombre" class="form-control" id="Nombre" 
+									<label for="Nombre">Nombre</label> <input type="text" name="Nombre" class="form-control" id="Nombre" 
 										placeholder="Nombre">
 								</div>
 								<div class="form-group">
