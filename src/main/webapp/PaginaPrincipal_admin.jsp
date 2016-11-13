@@ -33,6 +33,15 @@
 
 </head>
 <body>
+<%  
+					HttpSession sesion = (HttpSession) request.getSession(false);
+					String mensaje = (String)sesion.getAttribute("mensajeRegistro");
+					if(mensaje!=null){
+				%>
+					<h3 style="background-color:red; width:95%; margin:10px 20px;" class="alert">${mensajeRegistro}</h3>
+				<%} 
+					sesion.setAttribute("mensajeRegistro", null);
+				%>
 	<header class="container-fluid">
 		<div class="col-xs-3 col-sm-3">
 			<form action="pag_principal" method="post">
@@ -88,7 +97,6 @@
 			<th style="text-align:center;">Borrar</th>	
 		</tr>
 		<%  
-					HttpSession sesion = (HttpSession) request.getSession(false);
 					EntityManager em = (EntityManager) sesion.getAttribute("em");
 					UserTransaction ut = (UserTransaction) sesion.getAttribute("ut");
 					
