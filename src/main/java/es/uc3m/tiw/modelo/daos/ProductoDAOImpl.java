@@ -64,10 +64,12 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return listaproductos;
 	}
 	*/
-	/*
+	
 	@Override
 	public  Producto productoPorClave(int pk) throws SQLException{
 	
+		return em.find(Producto.class, pk);
+		/*
 		PreparedStatement ps = con.prepareStatement(rb.getString("seleccionarproductoPK"));
 		ps.setInt(1, pk);
 		Producto producto = null;
@@ -83,9 +85,9 @@ public class ProductoDAOImpl implements ProductoDAO {
             //producto.setPicture (resutados.getPicture("picture"));
 			
 		}
-		return producto;
+		return producto;*/
 	}
-	*/
+	
 	/*
 	@Override
 	

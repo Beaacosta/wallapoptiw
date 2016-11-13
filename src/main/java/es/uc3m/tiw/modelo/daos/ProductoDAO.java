@@ -29,7 +29,7 @@ public interface ProductoDAO {
 
 	//public abstract Producto productoPorNombre(String nombre) throws SQLException;
 
-	//public abstract Producto productoPorClave(int pk) throws SQLException;
+	public abstract Producto productoPorClave(int pk) throws SQLException;
 
 	//public abstract Collection<Producto> listaProducto() throws SQLException;
 

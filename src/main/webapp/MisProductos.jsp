@@ -129,9 +129,9 @@
 						<div class="row col-xs-12 col-md-4">
 							<h2 class="precio">${prod_sesion.precio}</h2>
 							<div class="centrarbotones">
-							<button type="hidden" class="btn btn-default"
-										data-toggle="modal" name="accion" id="${prod_sesion.id}" 
-									value="eliminar" data-target="#ventanaEliminarProd" >Eliminar</button>
+							<button type="button" class="btn btn-default"
+										data-toggle="modal"   onClick="window.location.href='productos?accion=eliminar&id=${prod_sesion.id}'"
+									 data-target="#ventanaEliminarProd" >Eliminar</button>									
 								
 								
 								<!--  
