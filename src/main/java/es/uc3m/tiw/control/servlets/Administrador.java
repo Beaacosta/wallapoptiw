@@ -65,8 +65,7 @@ public class Administrador extends HttpServlet implements Serializable{
 		String accion = request.getParameter("accion");
 		
 		if(accion.equals("eliminar_usuario")){
-			
-			
+
 			try{
 				Usuario user = null;
 				ProductoDAOImpl prod = new ProductoDAOImpl(em, ut);
@@ -88,6 +87,53 @@ public class Administrador extends HttpServlet implements Serializable{
 				
 			}
 	
+		}
+		if(accion.equals("editar_usuario")){
+			
+			Usuario user = null;
+			try{
+				user = usuarioDAO.recuperarUnUsuarioPorClave(id);
+				String nombre=request.getParameter("Nombre");
+				String apellidos=request.getParameter("Apellidos");
+				String email=request.getParameter("InputEmail");				
+				String ciudad=request.getParameter("Ciudad");
+				String contrasenya=request.getParameter("Contrasenya");
+				
+				
+				if(!nombre.equals("")){
+					user.setNombre(nombre);
+				}
+				if(!apellidos.equals("")){
+					user.setApellidos(apellidos);
+				}
+				if(!email.equals("")){
+					//Comprobar que el email no exista ya en la bd
+					user.setMail(email);
+				}
+				if(!ciudad.equals("")){
+					user.setCiudad(ciudad);
+				}
+				if(!contrasenya.equals("")){
+					user.setPassword(contrasenya);
+					user.setPassVerif(contrasenya);
+				}
+				
+				try{
+					user=usuarioDAO.actualizarUsuario(user);
+					PAGINA=USUARIOS;
+					System.out.println("SI");
+				}
+				catch (Exception e){
+					PAGINA=USUARIOS;
+					e.printStackTrace();
+					//Mensaje no se ha podido editar
+					System.out.println("NO");		
+				}
+			}
+			catch(Exception e){
+				PAGINA=USUARIOS;
+				e.printStackTrace();
+			}	
 		}
 		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);	
 
