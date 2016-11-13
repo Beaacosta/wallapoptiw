@@ -87,7 +87,6 @@
 	
 		
 
-	<form action="administrador" method="post">
 	<table border="1" style="text-align:center; width:95%; margin: 0 20px;">
 		<tr class="text-center">
 			<th style="text-align:center;">Nombre</th>
@@ -110,6 +109,8 @@
 			<td>${Usuario_pintar.nombre }</td> 
 			<td>${Usuario_pintar.apellidos }</td>
 			<td>${Usuario_pintar.password }</td>
+			<form action="administrador" method="get">
+			
 			<td><a href="administrador?accion=eliminar_usuario&id=${Usuario_pintar.id}">Borrar</a></td>
 			<td><button type="button" class="btn btn-default" data-toggle="modal"
 				data-target="#ventanaEditar" style="margin-left:15px;">Editar</button></td>
@@ -123,6 +124,11 @@
 				<h4 class="modal-title">Editar usuario</h4>
 				</div>
 				<div class="modal-body">
+								<div class="form-group">
+									<label for="Id">Id</label> <input type="text"
+										name="Id" class="form-control" id="Id" 
+										value="${Usuario_pintar.id}" placeholder="Id">
+								</div>
 								<div class="form-group">
 									<label for="InputEmail">Email</label> <input type="email"
 										name="InputEmail" class="form-control" id="InputEmail" 
@@ -153,7 +159,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal" aria-hidden="true">Cerrar</button>
-								<a href="administrador?accion=editar_usuario&id=${Usuario_pintar.id}">Editar</a>
+								<button type="submit" class="btn btn-default" name="accion" value="editar_usuario">Guardar</button>
 							</div>
 		</tr>
 		<%

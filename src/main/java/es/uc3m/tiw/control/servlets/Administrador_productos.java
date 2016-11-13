@@ -128,7 +128,7 @@ public class Administrador_productos extends HttpServlet implements Serializable
 				}
 			}
 			catch(Exception e){
-				PAGINA=USUARIOS;
+				PAGINA=PRODUCTOS;
 				e.printStackTrace();
 			}	
 		}
