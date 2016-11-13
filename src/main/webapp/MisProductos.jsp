@@ -129,7 +129,7 @@
 								<img src="images/carrito.png" width="100" alt="imagenprod1">
 							</div>
 							<div class="col-xs-9 col-md-3 datos">
-								<h3>${prod_sesion.titulo}</h3>	
+								<a href="Producto.jsp?id=${prod_sesion.id}"><h3>${prod_sesion.titulo}</h3></a>	
 							<h4>${prod_sesion.categoria}</h4>
 							</div>
 						</div>
