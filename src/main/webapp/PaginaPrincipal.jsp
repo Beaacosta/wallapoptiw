@@ -118,10 +118,10 @@
 								<a href="#" onclick="PaginaPrincipal.item1.submit();">
 									<div class="col-xs-3 col-md-1">
 										<img src="images/carrito.png" width="100" alt="imagenprod1">
-									</div> <input type="hidden" name="producto" value="producto1">
+									</div>
 									<div class="col-xs-9 col-md-3 datos">
-										<h3>${prod_sesion.titulo}</h3>
-										<h4>${prod_sesion.categoria}</h4>
+										<a href="Producto.jsp?id=${prod_sesion.id}"><h3>
+												${prod_sesion.titulo}</h3></a>
 									</div>
 						</div>
 						</a>
@@ -145,6 +145,7 @@
 			<p>Wallapop, compra y vende productos</p>
 			<p>CONDICIONES DE USO. POLITICA DE PRIVACIDAD Y COOKIES</p>
 			<p>Copyright © 2016 - Wallapop - de sus respectivos propietarios
+
 
 
 
