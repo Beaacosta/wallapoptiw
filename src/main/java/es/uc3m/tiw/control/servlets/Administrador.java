@@ -62,10 +62,10 @@ public class Administrador extends HttpServlet implements Serializable{
 			throws ServletException, IOException {
 
 		HttpSession sesion = (HttpSession) request.getSession(false);
-		int id = Integer.parseInt(request.getParameter("Id"));
 		String accion = request.getParameter("accion");
 		
 		if(accion.equals("eliminar_usuario")){
+			int id = Integer.parseInt(request.getParameter("id"));
 
 			try{
 				Usuario user = null;
@@ -94,10 +94,10 @@ public class Administrador extends HttpServlet implements Serializable{
 	
 		}
 		if(accion.equals("editar_usuario")){
-			
+			int id2 = Integer.parseInt(request.getParameter("Id"));
 			Usuario user = null;
 			try{
-				user = usuarioDAO.recuperarUnUsuarioPorClave(id);
+				user = usuarioDAO.recuperarUnUsuarioPorClave(id2);
 				String nombre=request.getParameter("Nombre");
 				String apellidos=request.getParameter("Apellidos");
 				String email=request.getParameter("InputEmail");				
