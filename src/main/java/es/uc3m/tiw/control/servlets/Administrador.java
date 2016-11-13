@@ -62,7 +62,7 @@ public class Administrador extends HttpServlet implements Serializable{
 			throws ServletException, IOException {
 
 		HttpSession sesion = (HttpSession) request.getSession(false);
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("Id"));
 		String accion = request.getParameter("accion");
 		
 		if(accion.equals("eliminar_usuario")){
