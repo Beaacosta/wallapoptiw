@@ -114,6 +114,7 @@
 						sesion.setAttribute("prod_sesion", p);
 						
 				%>
+				<form action="productos" method="post">
 				<div class="col-xs-12 col-md-4 cajaproducto">
 					<div class="container">
 						<div class="row">
@@ -128,7 +129,12 @@
 						<div class="row col-xs-12 col-md-4">
 							<h2 class="precio">${prod_sesion.precio}</h2>
 							<div class="centrarbotones">
-							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#ventanaEliminarProd">Eliminar</button>
+							<button type="hidden" class="btn btn-default"
+										data-toggle="modal" name="accion" id="${prod_sesion.id}" 
+									value="eliminar" data-target="#ventanaEliminarProd" >Eliminar</button>
+								
+								
+								<!--  
 								<div class="modal fade" id="ventanaEliminarProd">
 									<div class="modal-dialog">
 										<div class="modal-content">
@@ -139,7 +145,9 @@
 											</div>
 										</div>
 									</div>
-								</div>	
+								</div>
+								-->
+									
 							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#ventanaModificarProd">Modificar</button>	
 							<div class="modal fade" id="ventanaModificarProd">
 								<div class="modal-dialog">
@@ -181,6 +189,7 @@
 						</div>
 					</div>
 				</div>
+				</form>
 				<%}
 						}%>	
 			</div>
