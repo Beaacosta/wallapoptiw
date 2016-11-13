@@ -29,8 +29,10 @@
 					String mensaje = (String)sesion.getAttribute("mensajeRegistro");
 					if(mensaje!=null){
 				%>
-					<h2 style="background-color:red; width:95%; margin:10px 20px;" class="alert">${mensaje}</h2>
-				<%} %>
+					<h3 style="background-color:red; width:95%; margin:10px 20px;" class="alert">${mensajeRegistro}</h3>
+				<%}
+					sesion.setAttribute("mensajeRegistro", null);
+				%>
 	<!--  Formulario para enviar los datos al SesionServlet -->		
 	
 	<div class="container">

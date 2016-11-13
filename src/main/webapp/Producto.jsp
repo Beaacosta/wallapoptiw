@@ -25,6 +25,15 @@
 
     </head>
     <body>
+    <%  
+					HttpSession sesion = (HttpSession) request.getSession(false);
+					String mensaje = (String)sesion.getAttribute("mensajeRegistro");
+					if(mensaje!=null){
+				%>
+					<h3 style="background-color:red; width:95%; margin:10px 20px;" class="alert">${mensajeRegistro}</h3>
+				<%} 
+					sesion.setAttribute("mensajeRegistro", null);
+				%>
 	<header class="container-fluid">
 		<div class="col-xs-3 col-sm-3">
 			<a href="PaginaPrincipal.jsp"><img src="images/logo.png" width="100" alt=logo Wallapop"></a>
@@ -44,7 +53,6 @@
 	<%  
 			
 			int id=Integer.parseInt(request.getParameter("id"));
-			HttpSession sesion = (HttpSession) request.getSession(false);
 			EntityManager em = (EntityManager) sesion.getAttribute("em");
 			UserTransaction ut = (UserTransaction) sesion.getAttribute("ut");
 			ProductoDAOImpl prod = new ProductoDAOImpl(em, ut);
