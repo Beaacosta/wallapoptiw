@@ -83,19 +83,57 @@ public class ProductoServlet extends HttpServlet implements Serializable{
 
 				PAGINA=MISPRODUCTOS_JSP;
 			}
-
-		}else if(accion.equals("no_eliminar")){
-			try{
-
-			}catch(Exception e){
-
-			}
+			
 
 		}
-			config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);
-		
+		if(accion.equals("editar")){
+			
+			Usuario user = null;
+			try{
+				Producto prod= productoDao.productoPorClave(id);
+				String nombre=request.getParameter("NombreProducto");
+				String categoria=request.getParameter("Categoria");
+				String descripcion=request.getParameter("Descripcion");				
+				Double precio=Double.parseDouble(request.getParameter("Precio"));
+				String estado=request.getParameter("Estado");
+				
+				
+				if(!nombre.equals("")){
+					prod.setTitulo(nombre);
+				}
+				if(!categoria.equals("")){
+					prod.setCategoria(categoria);
+				}
+				if(!descripcion.equals("")){
+					//Comprobar que el email no exista ya en la bd
+					prod.setDescripcion(descripcion);
+				}
+				if(!precio.equals("")){
+					prod.setPrecio(precio);
+				}
+				if(!estado.equals("")){
+					prod.setEstado(estado);
+				}
+				
+				try{
+					prod= productoDao.actualizarProducto(prod);
+					PAGINA=MISPRODUCTOS_JSP;
+					System.out.println("SI");
+				}
+				catch (Exception e){
+					PAGINA=MISPRODUCTOS_JSP;
+					e.printStackTrace();
+					//Mensaje no se ha podido editar
+					System.out.println("NO");		
+				}
+			}
+			catch(Exception e){
+				PAGINA=MISPRODUCTOS_JSP;
+				e.printStackTrace();
+			}	
+		}
+		config.getServletContext().getRequestDispatcher(PAGINA).forward(request, response);	
 	}
-
 
 
 	/**

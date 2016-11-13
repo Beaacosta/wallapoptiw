@@ -138,8 +138,7 @@
 							<div class="centrarbotones">
 							<button type="button" class="btn btn-default"
 										data-toggle="modal"   onClick="window.location.href='productos?accion=eliminar&id=${prod_sesion.id}'"
-									 data-target="#ventanaEliminarProd" >Eliminar</button>									
-								
+									 data-target="#ventanaEliminarProd" >Eliminar</button>								
 								
 								<!--  
 								<div class="modal fade" id="ventanaEliminarProd">
@@ -166,28 +165,28 @@
 										<div class="modal-body">
 											<div class="form-group">
 												<label for="NombreProducto">Nombre del producto</label>
-												<input type="NombreProducto" class="form-control" value="${prod.nombre}" id="NombreProducto" placeholder="NombreProducto">
+												<input type="NombreProducto" class="form-control" value="${prod_sesion.titulo}" name="NombreProducto" id="NombreProducto" placeholder="NombreProducto">
 											</div>
 											<div class="form-group">
 												<label for="Categoria">Categoria</label>
-												<input type="Categoria" class="form-control" value="${prod.categoria}" id="Categoria" placeholder="Categoria">
+												<input type="Categoria" class="form-control" value="${prod_sesion.categoria}" name="Categoria" id="Categoria" placeholder="Categoria">
 											</div>
 											<div class="form-group">
 												<label for="Descripcion">Descripcion</label>
-												<input type="Descripcion" class="form-control" value="${prod.descripcion}"id="Descripcion" placeholder="Descripcion">
+												<input type="Descripcion" class="form-control" value="${prod_sesion.descripcion}" name="Descripcion" id="Descripcion" placeholder="Descripcion">
 											</div>
 											<div class="form-group">
 												<label for="Precio">Precio</label>
-												<input type="Precio" class="form-control" value="${prod.precio}"id="Precio" placeholder="Precio">
+												<input type="Precio" class="form-control" value="${prod_sesion.precio}" name="Precio" id="Precio" placeholder="Precio">
 											</div>
 											<div class="form-group">
 												<label for="Estado">Estado</label>
-												<input type="Estado" class="form-control" value="${prod.nombre}"id="Estado" placeholder="Disponible/Reservado/Vendido">
+												<input type="Estado" class="form-control" value="${prod_sesion.estado}" name="Estado" id="Estado" placeholder="Disponible/Reservado/Vendido">
 											</div>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-											<button type="hidden" name="accion" value="modificar" class="btn btn-default">Guardar cambios</button>	
+											<button type="hidden" name="accion" value="modificar" class="btn btn-default" onClick="window.location.href='productos?accion=editar&id=${prod_sesion.id}'">Guardar cambios</button>	
 										</div>
 									</div>
 								</div>	

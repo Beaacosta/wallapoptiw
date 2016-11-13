@@ -36,4 +36,7 @@ public interface ProductoDAO {
 	//public abstract void setConexion(Connection con);
 
 	//public abstract void setQuerys(ResourceBundle rb);
+	
+	public Producto actualizarProducto(Producto producto) throws SQLException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException;
+
 }
