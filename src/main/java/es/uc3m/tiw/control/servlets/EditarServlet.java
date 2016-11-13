@@ -119,14 +119,16 @@ public class EditarServlet extends HttpServlet implements Serializable{
 			try{
 				user=usuarioDAO.actualizarUsuario(user);
 				sesion.setAttribute("usuario_sesion", user);
+				String mens ="Usuario actualizado correctamente";
+				sesion.setAttribute("mensaje", mens);
 				PAGINA=MIPERFIL_JSP;
-				System.out.println("SI");
 			}
 			catch (Exception e){
 				PAGINA=MIPERFIL_JSP;
 				e.printStackTrace();
 				//Mensaje no se ha podido editar
-				System.out.println("NO");
+				String mens ="Usuario no actualizado correctamente";
+				sesion.setAttribute("mensaje", mens);
 				
 			}
 	
@@ -154,13 +156,13 @@ public class EditarServlet extends HttpServlet implements Serializable{
 					sesion.setAttribute("usuario_sesion", user);
 					PAGINA=MICONTRASENYA_JSP;
 					//Mensaje si se ha podido editar
-					System.out.println("SI");
+					String mens ="Contraseña actualizada correctamente";
+					sesion.setAttribute("mensaje", mens);
 				}
 				catch (Exception e){
 					PAGINA=MICONTRASENYA_JSP;
-					//Mensaje no se ha podido editar
-					System.out.println("NO");
-					
+					String mens ="Contraseña no actualizada correctamente";
+					sesion.setAttribute("mensaje", mens);
 				}
 			}
 			
@@ -176,6 +178,8 @@ public class EditarServlet extends HttpServlet implements Serializable{
 					prod_borrar.borrarProducto(p);
 				}
 				usuarioDAO.borrarUsuario(user);
+				String mens ="Usuario borrado correctamente";
+				sesion.setAttribute("mensaje", mens);
 				PAGINA=INDEX_JSP;
 			}catch(Exception e){
 				PAGINA=MIPERFIL_JSP;

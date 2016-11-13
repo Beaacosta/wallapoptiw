@@ -114,8 +114,8 @@ public class InicioServlet extends HttpServlet implements Serializable{
 			boolean passTrue = Herramientas.validarPass(password);
 			
 			if((mailTrue && passTrue)==false){
-				/*String mensje ="Ya existe un usuario con este email. Por favor, elija otro";
-				sesion.setAttribute("mensajeRegistro", mensje);*/
+				String mens ="No has introducido todos los campos, vuelva a intentarlo";
+				sesion.setAttribute("mensajeRegistro", mens);
 				PAGINA=INDEX_JSP;
 			}else if(email.equals("admin@admin.com") && password.equals("admin")){
 				try {
@@ -129,30 +129,20 @@ public class InicioServlet extends HttpServlet implements Serializable{
 				
 			}
 			
-			else if(email.equals("admin@admin.com") && password.equals("admin")){
-				/*
-				try {
-					usuarios = (List<Usuario>) usuarioDAO.listarUsuarios();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				request.setAttribute("usuarios", usuarios);
-				*/
-				PAGINA=PPRINCIPAL_ADMIN;
-				
-			}
-			
 			else{
 				 try{
 					 usuario=usuarioDAO.recuperarUnUsuarioPorEmailAndPass(email, password);
 					 if (usuario==null) {
+						 String mens ="No existe ese usuario, vuelva a intentarlo";
+						 sesion.setAttribute("mensajeRegistro", mens);
 						 PAGINA=INDEX_JSP;
 					 }else {
 						 sesion.setAttribute("usuario_sesion", usuario);
 						 PAGINA=PPRINCIPAL_JSP;
 					 }
 				 }catch (Exception e){
+					 String mens ="No existe ese usuario, vuelva a intentarlo";
+					 sesion.setAttribute("mensajeRegistro", mens);
 					 PAGINA=INDEX_JSP;					 
 					 e.printStackTrace();
 				 }				
@@ -186,6 +176,8 @@ public class InicioServlet extends HttpServlet implements Serializable{
 					 try{
 						 usuarioDAO.crearUsuario(user);
 						 sesion.setAttribute("usuario_sesion", user);
+						 String mens ="Usuario creado correctamente";
+						 sesion.setAttribute("mensajeRegistro", mens);
 						 PAGINA=PPRINCIPAL_JSP;
 					 }
 						 catch (Exception e1){
@@ -193,11 +185,15 @@ public class InicioServlet extends HttpServlet implements Serializable{
 						 }
 				 }else {
 					 PAGINA=INDEX_JSP;
+					 String mens ="Ya existe ese email, vuelva a intentarlo";
+					 sesion.setAttribute("mensajeRegistro", mens);
 				 }
 			 }catch (NoResultException e){
 				 try{
 				 usuarioDAO.crearUsuario(user);
 				 sesion.setAttribute("usuario_sesion", user);
+				 String mens ="Usuario creado correctamente";
+				 sesion.setAttribute("mensajeRegistro", mens);
 				 PAGINA=PPRINCIPAL_JSP;
 				 }
 				 catch (Exception e1){

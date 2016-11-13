@@ -24,9 +24,15 @@
 </head>
 
 <body>
-
-	<!--  Formulario para enviar los datos al SesionServlet -->
-
+	<%  
+					HttpSession sesion = (HttpSession) request.getSession(false);
+					String mensaje = (String)sesion.getAttribute("mensajeRegistro");
+					if(mensaje!=null){
+				%>
+					<h2 style="background-color:red; width:95%; margin:10px 20px;" class="alert">${mensaje}</h2>
+				<%} %>
+	<!--  Formulario para enviar los datos al SesionServlet -->		
+	
 	<div class="container">
 		<article class="registro">
 
